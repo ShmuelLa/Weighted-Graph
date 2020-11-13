@@ -1,8 +1,17 @@
 import java.util.Collection;
+import java.util.HashMap;
 
 public class WGraph_DS implements weighted_graph {
+    private HashMap<Integer, node_info> _nodes;
+    private int _e_size;
+    private int _mc;
+    private static int _ncount = 0;
 
     class NodeInfo implements node_info {
+        private int _key;
+        private double _tag;
+        private String _str;
+        private HashMap<Integer,node_info> _neighbors;
 
         /**
          * Return the key (id) associated with this node.
@@ -12,7 +21,7 @@ public class WGraph_DS implements weighted_graph {
          */
         @Override
         public int getKey() {
-            return 0;
+            return this._key;
         }
 
         /**
@@ -22,7 +31,7 @@ public class WGraph_DS implements weighted_graph {
          */
         @Override
         public String getInfo() {
-            return null;
+            return this._str;
         }
 
         /**
@@ -32,7 +41,7 @@ public class WGraph_DS implements weighted_graph {
          */
         @Override
         public void setInfo(String s) {
-
+            this._str = s;
         }
 
         /**
@@ -43,7 +52,7 @@ public class WGraph_DS implements weighted_graph {
          */
         @Override
         public double getTag() {
-            return 0;
+            return this._tag;
         }
 
         /**
@@ -54,7 +63,7 @@ public class WGraph_DS implements weighted_graph {
          */
         @Override
         public void setTag(double t) {
-
+            this._tag = t;
         }
     }
 
@@ -66,7 +75,7 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public node_info getNode(int key) {
-        return null;
+        return this._nodes.get(key);
     }
 
     /**
