@@ -91,6 +91,10 @@ public class WGraph_DS implements weighted_graph {
             this._n_edges.put(n,w);
         }
 
+        private boolean hasNi(int n) {
+            return this._n_edges.containsKey(n);
+        }
+
         private Collection<node_info> getNi() {
             Collection<node_info> ni_list = new ArrayList<>();
             for (Integer k : this._n_edges.keySet()) {
@@ -193,9 +197,11 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public void connect(int node1, int node2, double w) {
-        this._g_edges.get(node1).connectE(node2,w);
-        _e_size++;
-        _mc++;
+        if (this._g_edges.containsKey(node1) && !this._g_edges.get(node1).hasNi(node2)) {
+            this._g_edges.get(node1).connectE(node2,w);
+            _e_size++;
+            _mc++;
+        }
     }
 
     /**
