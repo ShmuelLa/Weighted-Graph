@@ -1,6 +1,8 @@
 import java.util.List;
 
 public class WGraph_Algo implements weighted_graph_algorithms {
+    weighted_graph _g = new WGraph_DS();
+
     /**
      * Init the graph on which this set of algorithms operates on.
      *
@@ -8,7 +10,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public void init(weighted_graph g) {
-
+        this._g = g;
     }
 
     /**
@@ -18,7 +20,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public weighted_graph getGraph() {
-        return null;
+        return this._g;
     }
 
     /**
