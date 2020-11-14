@@ -87,6 +87,10 @@ public class WGraph_DS implements weighted_graph {
             this._n_edges = new HashMap<>();
         }
 
+        private void setWeight(int dest, double w) {
+            this._n_edges.put(dest,w);
+        }
+
         private void connectE(int n, double w) {
             this._n_edges.put(n,w);
         }
@@ -197,10 +201,17 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public void connect(int node1, int node2, double w) {
-        if (this._g_edges.containsKey(node1) && !this._g_edges.get(node1).hasNi(node2)) {
-            this._g_edges.get(node1).connectE(node2,w);
-            _e_size++;
-            _mc++;
+        if (this._g_edges.containsKey(node1)) {
+            if (this._g_edges.containsKey(node1) && !this._g_edges.get(node1).hasNi(node2)) {
+                this._g_edges.get(node1).connectE(node2,w);
+                _e_size++;
+                _mc++;
+                return;
+            }
+            if (this._g_edges.get(node1).hasNi(node2)) {
+                this._g_edges.get(node1).setWeight(node2,w);
+                _mc++;
+            }
         }
     }
 
