@@ -2,7 +2,8 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class WGraph_DS implements weighted_graph {
-    private HashMap<Integer, node_info> _nodes;
+    private HashMap<Integer,node_info> _nodes;
+    private HashMap<Integer,HashMap<Integer,Double>> _connections;
     private int _e_size;
     private int _mc;
     private static int _ncount = 0;
@@ -11,8 +12,19 @@ public class WGraph_DS implements weighted_graph {
         private int _key;
         private double _tag;
         private String _str;
-        private HashMap<Integer,node_info> _neighbors;
 
+        private NodeInfo() {
+            this._key = _ncount;
+            _ncount++;
+            this._tag = 0;
+            this._str = null;
+        }
+
+        private NodeInfo(int k) {
+            this._key = k;
+            this._tag = 0;
+            this._str = null;
+        }
         /**
          * Return the key (id) associated with this node.
          * Note: each node_data should have a unique key.
@@ -67,6 +79,12 @@ public class WGraph_DS implements weighted_graph {
         }
     }
 
+    private class EdgeInfo {
+        int _node1;
+        int _node2;
+        double _weight;
+    }
+
     /**
      * return the node_data by the node_id,
      *
@@ -88,7 +106,7 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public boolean hasEdge(int node1, int node2) {
-        return false;
+        return this._connections.get(node1).containsKey(node2);
     }
 
     /**
@@ -102,7 +120,7 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public double getEdge(int node1, int node2) {
-        return 0;
+        return this._connections.get(node1).get(node2);
     }
 
     /**
@@ -114,7 +132,6 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public void addNode(int key) {
-
     }
 
     /**
@@ -178,7 +195,6 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public void removeEdge(int node1, int node2) {
-
     }
 
     /**
@@ -189,7 +205,7 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public int nodeSize() {
-        return 0;
+        return this._nodes.size();
     }
 
     /**
@@ -200,7 +216,7 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public int edgeSize() {
-        return 0;
+        return this._e_size;
     }
 
     /**
@@ -211,6 +227,6 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public int getMC() {
-        return 0;
+        return this._mc;
     }
 }
