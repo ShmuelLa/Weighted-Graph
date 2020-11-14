@@ -1,14 +1,16 @@
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class WGraph_DS implements weighted_graph {
-    private HashMap<Integer,node_info> _nodes;
-    private HashMap<Integer,HashMap<Integer,Double>> _connections;
+    private HashMap<Integer,node_info> _g_nodes;
+    private HashMap<Integer,EdgeInfo> _g_edges;
     private int _e_size;
     private int _mc;
     private static int _ncount = 0;
 
-    class NodeInfo implements node_info {
+    private class NodeInfo implements node_info {
         private int _key;
         private double _tag;
         private String _str;
@@ -80,9 +82,23 @@ public class WGraph_DS implements weighted_graph {
     }
 
     private class EdgeInfo {
-        int _node1;
-        int _node2;
-        double _weight;
+        private HashMap<Integer,Double> _n_edges;
+
+        private EdgeInfo(int n, double w) {
+            _n_edges.put(n,w);
+        }
+
+        private Collection<node_info> getNi(int key) {
+            Collection<node_info> ni_list = new ArrayList<>();
+            for (Integer k : this._n_edges.keySet()) {
+                ni_list.add(_g_nodes.get(k));
+            }
+            return ni_list;
+        }
+
+        private double getW(int dest_key) {
+            return this._n_edges.get(dest_key);
+        }
     }
 
     /**
@@ -93,7 +109,7 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public node_info getNode(int key) {
-        return this._nodes.get(key);
+        return this._g_nodes.get(key);
     }
 
     /**
@@ -106,7 +122,7 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public boolean hasEdge(int node1, int node2) {
-        return this._connections.get(node1).containsKey(node2);
+        return this._g_edges.get(node1)._n_edges.containsKey(node2);
     }
 
     /**
@@ -120,7 +136,10 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public double getEdge(int node1, int node2) {
-        return this._connections.get(node1).get(node2);
+        if (this._g_edges.get(node1)._n_edges.containsKey(node2)) {
+            return this._g_edges.get(node1).getW(node2);
+        }
+        else return -1;
     }
 
     /**
@@ -132,6 +151,7 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public void addNode(int key) {
+        new NodeInfo(key);
     }
 
     /**
@@ -145,7 +165,8 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public void connect(int node1, int node2, double w) {
-
+        new EdgeInfo(node1,node2,w);
+        _e_size++;
     }
 
     /**
@@ -157,7 +178,7 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public Collection<node_info> getV() {
-        return null;
+        return this._nodes.values();
     }
 
     /**
@@ -170,7 +191,11 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public Collection<node_info> getV(int node_id) {
-        return null;
+        Collection<node_info> rt_list = new LinkedList<>();
+        for (node_info n : this.getV()) {
+            if
+        }
+        return rt_list;
     }
 
     /**
