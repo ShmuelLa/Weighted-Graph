@@ -152,6 +152,8 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public boolean hasEdge(int node1, int node2) {
+        if (node1 == node2) return false;
+        if (!this._g_nodes.containsKey(node1) || !this._g_nodes.containsKey(node2)) return false;
         return this._g_edges.get(node1)._n_edges.containsKey(node2);
     }
 
@@ -201,9 +203,11 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public void connect(int node1, int node2, double w) {
-        if (this._g_edges.containsKey(node1)) {
+        if (node1 == node2) return;
+        if (this._g_edges.containsKey(node1) && this._g_edges.containsKey(node2)) {
             if (this._g_edges.containsKey(node1) && !this._g_edges.get(node1).hasNi(node2)) {
                 this._g_edges.get(node1).connectE(node2,w);
+                this._g_edges.get(node2).connectE(node1,w);
                 _e_size++;
                 _mc++;
                 return;
@@ -255,6 +259,7 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public node_info removeNode(int key) {
+        if (!this._g_nodes.containsKey(key)) return null;
         node_info tmo_n = this._g_nodes.get(key);
         this._g_nodes.remove(key);
         _mc = _mc+this._g_edges.get(key).getNiSize();
@@ -274,6 +279,7 @@ public class WGraph_DS implements weighted_graph {
     @Override
     public void removeEdge(int node1, int node2) {
         this._g_edges.get(node1).removeEd(node2);
+        this._g_edges.get(node2).removeEd(node1);
         _mc++;
         _e_size--;
     }
