@@ -1,3 +1,5 @@
+![alt text](WikiPictures/wgraphpic.jpg)
+
 # Undirected & Unweighted Graph Java Implementation
   
 An implementation of an undirected unweighted graph in java.  
