@@ -1,7 +1,4 @@
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class WGraph_Algo implements weighted_graph_algorithms {
     weighted_graph _g = new WGraph_DS();
@@ -90,6 +87,24 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public List<node_info> shortestPath(int src, int dest) {
+        PriorityQueue<node_info> pq = new PriorityQueue<node_info>();
+        HashSet<Integer> visited = new HashSet<>();
+        HashMap<Integer,Integer> parent = new HashMap<>();
+        int cur = src;
+        this._g.getNode(src).setTag(0);
+        visited.add(src);
+        pq.add(this._g.getNode(src));
+        while (!pq.isEmpty()) {
+            cur = pq.poll().getKey();
+            for (node_info n : this._g.getV(cur)) {
+                if (!visited.contains(cur)) {
+                    n.setTag(n.getTag()+this._g.getEdge(cur,n.getKey()));
+                    visited.add(n.getKey());
+                    parent.put(n.getKey(),cur);
+                    pq.add(n);
+                }
+            }
+        }
         return null;
     }
 
