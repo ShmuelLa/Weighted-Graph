@@ -12,7 +12,7 @@ public class playground {
         System.out.println(g1.getEdge(2,3));
         g1.removeEdge(2,3);
         g1.connect(2,3,45);
-        g1.connect(2,3,89);
+        g1.connect(2,3,46);
         System.out.println(" ");
         System.out.println("edges  " + g1.edgeSize());
         System.out.println("mode count  " + g1.getMC());

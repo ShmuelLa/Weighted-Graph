@@ -209,8 +209,13 @@ public class WGraph_DS implements weighted_graph {
                 return;
             }
             if (this._g_edges.get(node1).hasNi(node2)) {
-                this._g_edges.get(node1).setWeight(node2,w);
-                _mc++;
+                if (this._g_edges.get(node1).getW(node2) == w) {
+                    return;
+                }
+                else {
+                    this._g_edges.get(node1).setWeight(node2,w);
+                    _mc++;
+                }
             }
         }
     }

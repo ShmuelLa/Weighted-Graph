@@ -1,4 +1,7 @@
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class WGraph_Algo implements weighted_graph_algorithms {
     weighted_graph _g = new WGraph_DS();
@@ -34,14 +37,32 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     }
 
     /**
-     * Returns true if and only if (iff) there is a valid path from EVREY node to each
-     * other node. NOTE: assume ubdirectional graph.
+     * Returns true if graph is connected which means there is a path between each and every two nodes on the graph.
+     * We use a basic BFS algorithm to mark each and every connected node on the graph.
+     * This method uses a LinkedList as a queue for the next node (add() and poll() both O(1)).
+     * A HashSet for the visited nodes (efficient contains() method O(1)).
+     * After scanning we true if the amount of the visited nodes == the number of the nodes in the graph
      *
-     * @return
+     * @return True if the graph is connected false otherwise
      */
     @Override
     public boolean isConnected() {
-        return false;
+        if (this._g.nodeSize() <= 1 || this._g == null) return true;
+        Queue<Integer> queue = new LinkedList<>();
+        int tmp_key=this._g.getV().iterator().next().getKey();
+        HashSet<Integer> visited = new HashSet<>();
+        queue.add(tmp_key);
+        visited.add(tmp_key);
+        while (!queue.isEmpty()) {
+            tmp_key=queue.poll();
+            for (node_info node : this._g.getV(tmp_key)) {
+                if (!visited.contains(node.getKey())) {
+                    visited.add(node.getKey());
+                    queue.add(node.getKey());
+                }
+            }
+        }
+        return visited.size() == this._g.nodeSize();
     }
 
     /**
