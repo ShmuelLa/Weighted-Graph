@@ -8,7 +8,5 @@ public class playground {
         System.out.println(i);
         double d = Double.POSITIVE_INFINITY;
         System.out.println(d);
-        WGraph_Algo ga1 = new WGraph_Algo();
-        ga1.shortestPath(1,2);
     }
 }

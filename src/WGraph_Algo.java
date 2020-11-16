@@ -87,6 +87,8 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public List<node_info> shortestPath(int src, int dest) {
+        if (src == dest) return null;
+        if (this._g.getNode(src) == null || this._g.getNode(dest) == null) return null;
         PriorityQueue<node_info> pq = new PriorityQueue<node_info>();
         HashSet<Integer> visited = new HashSet<>();
         HashMap<Integer,Integer> parent = new HashMap<>();
@@ -97,24 +99,24 @@ public class WGraph_Algo implements weighted_graph_algorithms {
         pq.add(this._g.getNode(src));
         while (!pq.isEmpty() && cur!=dest) {
             cur = pq.poll().getKey();
+            if (cur == dest) break;
             for (node_info n : this._g.getV(cur)) {
-                if (!visited.contains(cur)) {
-                    n.setTag(n.getTag()+this._g.getEdge(cur,n.getKey()));
+                if (!visited.contains(n.getKey())) {
+                    n.setTag(this._g.getNode(cur).getTag()+this._g.getEdge(cur,n.getKey()));
                     visited.add(n.getKey());
                     parent.put(n.getKey(),cur);
                     pq.add(n);
-                    if (n.getKey() == dest) break;
                 }
+                if (n.getKey() == dest) break;
             }
         }
+        pq.clear();
         if (!visited.contains(dest)) return null;
         while (cur != src) {
-            pq.addAll(this._g.getV(cur));
-            result.add(0,pq.poll());
-            pq.clear();
-            cur = parent.get(result.get(0).getKey());
+            result.add(0,this._g.getNode(cur));
+            cur = parent.get(cur);
         }
-        result.add(this._g.getNode(src));
+        result.add(0,this._g.getNode(src));
         return result;
     }
 

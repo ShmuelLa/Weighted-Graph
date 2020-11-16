@@ -120,9 +120,9 @@ public class WGraph_DS implements weighted_graph {
          */
         @Override
         public int compareTo(node_info o) {
-            if (this._tag == o.getTag()) return 0;
-            else if (this._tag > o.getTag()) return 1;
-            return -1;
+            if (this._tag > o.getTag()) return 1;
+            else if (this._tag < o.getTag()) return -1;
+            return 0;
         }
     }
 
