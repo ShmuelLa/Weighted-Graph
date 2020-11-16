@@ -90,11 +90,12 @@ public class WGraph_Algo implements weighted_graph_algorithms {
         PriorityQueue<node_info> pq = new PriorityQueue<node_info>();
         HashSet<Integer> visited = new HashSet<>();
         HashMap<Integer,Integer> parent = new HashMap<>();
+        List<node_info> result = new ArrayList<>();
         int cur = src;
         this._g.getNode(src).setTag(0);
         visited.add(src);
         pq.add(this._g.getNode(src));
-        while (!pq.isEmpty()) {
+        while (!pq.isEmpty() && cur!=dest) {
             cur = pq.poll().getKey();
             for (node_info n : this._g.getV(cur)) {
                 if (!visited.contains(cur)) {
@@ -102,10 +103,19 @@ public class WGraph_Algo implements weighted_graph_algorithms {
                     visited.add(n.getKey());
                     parent.put(n.getKey(),cur);
                     pq.add(n);
+                    if (n.getKey() == dest) break;
                 }
             }
         }
-        return null;
+        if (!visited.contains(dest)) return null;
+        while (cur != src) {
+            pq.addAll(this._g.getV(cur));
+            result.add(0,pq.poll());
+            pq.clear();
+            cur = parent.get(result.get(0).getKey());
+        }
+        result.add(this._g.getNode(src));
+        return result;
     }
 
     /**

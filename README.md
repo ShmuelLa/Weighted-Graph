@@ -68,5 +68,8 @@ The `getV()` method is used almost in every algorithm and iteration in this proj
 - https://stackoverflow.com/questions/3267572/fastest-data-structure-for-contains-in-java
 - https://www.baeldung.com/java-hashset-arraylist-contains-performance
   
-### BFS algorithm:
-- https://www.youtube.com/watch?v=oDqjPvD54Ss&t=184s
+### Dijkstra's Algorithm
+- https://www.coursera.org/lecture/advanced-data-structures/core-dijkstras-algorithm-2ctyF
+
+### PriorityQueue and Comparable Usage
+- https://www.youtube.com/watch?v=c4ES6jGxqEw
