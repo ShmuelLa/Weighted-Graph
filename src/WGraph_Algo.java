@@ -73,7 +73,34 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public double shortestPathDist(int src, int dest) {
-        return 0;
+        if (this._g == null || src == dest || this._g.getNode(src) == null || this._g.getNode(dest) == null) return -1;
+        PriorityQueue<node_info> pq = new PriorityQueue<>();
+        double result;
+        node_info cur = this._g.getNode(src);
+        pq.add(cur);
+        cur.setTag(0);
+        while (!pq.isEmpty()) {
+            cur = pq.poll();
+            if (cur.getInfo() != "y") {
+                cur.setInfo("y");
+                if (cur.getKey() == dest) break;
+                for (node_info n : this._g.getV(cur.getKey())) {
+                    if (n.getTag() == -1) {
+                        n.setTag(Double.MAX_VALUE);
+                    }
+                    double tmp_tag = cur.getTag()+this._g.getEdge(cur.getKey(),n.getKey());
+                    if (tmp_tag < n.getTag()) {
+                        n.setTag(tmp_tag);
+                        pq.add(n);
+                    }
+                }
+            }
+        }
+        cur = this._g.getNode(dest);
+        result = cur.getTag();
+        if (cur.getInfo() != "y") return -1;
+        this.reset();
+        return result;
     }
 
     /**
@@ -88,9 +115,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public List<node_info> shortestPath(int src, int dest) {
-        if (this._g == null) return null;
-        if (src == dest) return null;
-        if (this._g.getNode(src) == null || this._g.getNode(dest) == null) return null;
+        if (this._g == null || src == dest || this._g.getNode(src) == null || this._g.getNode(dest) == null) return null;
         PriorityQueue<node_info> pq = new PriorityQueue<>();
         HashMap<node_info,node_info> parent = new HashMap<>();
         List<node_info> result = new ArrayList<>();
@@ -106,25 +131,23 @@ public class WGraph_Algo implements weighted_graph_algorithms {
                     if (n.getTag() == -1) {
                         n.setTag(Double.MAX_VALUE);
                     }
-                    if (cur.getTag() < n.getTag()) {
-                        n.setTag(cur.getTag()+this._g.getEdge(cur.getKey(),n.getKey()));
-                        parent.put(cur,n);
+                    double tmp_tag = cur.getTag()+this._g.getEdge(cur.getKey(),n.getKey());
+                    if (tmp_tag < n.getTag()) {
+                        n.setTag(tmp_tag);
+                        parent.put(n,cur);
                         pq.add(n);
                     }
                 }
             }
         }
-        if (this._g.getNode(dest).getInfo() != "y") return null;
+        cur = this._g.getNode(dest);
+        if (cur.getInfo() != "y") return null;
+        result.add(0,cur);
         while (cur.getKey() != src) {
             result.add(0,parent.get(cur));
             cur = parent.get(cur);
         }
-        for (node_info n : this._g.getV()) {
-            if (n.getTag() != 0 || n.getInfo() != null) {
-                n.setTag(-1);
-                n.setInfo(null);
-            }
-        }
+        this.reset();
         return result;
     }
 
@@ -152,5 +175,14 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     @Override
     public boolean load(String file) {
         return false;
+    }
+
+    public void reset() {
+        for (node_info n : this._g.getV()) {
+            if (n.getTag() != 0 || n.getInfo() != null) {
+                n.setTag(-1);
+                n.setInfo(null);
+            }
+        }
     }
 }
