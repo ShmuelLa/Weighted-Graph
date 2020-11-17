@@ -1,8 +1,24 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class WGraph_DS implements weighted_graph {
+/**
+ * This class implements the weighted_graph interface that represents a mathematical weighted graph
+ * it implements two classes internally:
+ * 1 - NodeInfo which implements node_info interface which includes the information and methods each node stores
+ * 2 - EdgeInfo which stores all the data and methods for all the edges in the graph
+ *
+ *
+ *
+ * each graph consists of two data structures. One for the node and one for the edges.
+ * has an integer that count the edges of the graph and a mode count that counts any change in
+ * the inner state of the graph. Also we implemented a HashMap data structure
+ * to point to each of the graph nodes.
+ *
+ * @author shmuel.lavian
+ */
+public class WGraph_DS implements weighted_graph, Serializable {
     private HashMap<Integer,node_info> _g_nodes;
     private HashMap<Integer,EdgeInfo> _g_edges;
     private int _e_size;

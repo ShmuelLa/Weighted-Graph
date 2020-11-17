@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 import java.util.function.DoubleBinaryOperator;
 
@@ -5,9 +6,9 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     weighted_graph _g = new WGraph_DS();
 
     /**
-     * Init the graph on which this set of algorithms operates on.
+     * Initialize the the graph on which this set of algorithms operates on by pointing a Graph_DS object.
      *
-     * @param g
+     * @param g - The graph to initialize
      */
     @Override
     public void init(weighted_graph g) {
@@ -15,9 +16,9 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     }
 
     /**
-     * Return the underlying graph of which this class works.
+     * Returns a pointer to the underlying graph of which this class works on.
      *
-     * @return
+     * @return this WGraph_DS Object
      */
     @Override
     public weighted_graph getGraph() {
@@ -25,9 +26,9 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     }
 
     /**
-     * Compute a deep copy of this weighted graph.
+     * Computes a deep copy of the received graph.
      *
-     * @return
+     * @return returned_g - the copied graph
      */
     @Override
     public weighted_graph copy() {
@@ -64,12 +65,16 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     }
 
     /**
-     * returns the length of the shortest path between src to dest
+     * Returns the length of the shortest path between two nodes based on Dijkstra's Algorithm
+     * We scan the graph using a PriorityQueue which compares based on the minimal node tag double
+     * This way we can tag each node we reach with the shortest length from the last visited node to it.
+     * This works by enqueuing the node with the smallest tag (path length) from the queue and checking it's neighbors
+     * After we finish the graph scan and only if we reached the destination we return the destination nodes tag.
      * Note: if no such path --> returns -1
      *
      * @param src  - start node
      * @param dest - end (target) node
-     * @return
+     * @return double which represents the shortest path from src to dest, -1 otherwise
      */
     @Override
     public double shortestPathDist(int src, int dest) {
@@ -104,14 +109,15 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     }
 
     /**
-     * returns the the shortest path between src to dest - as an ordered List of nodes:
-     * src--> n1-->n2-->...dest
-     * see: https://en.wikipedia.org/wiki/Shortest_path_problem
-     * Note if no such path --> returns null;
+     * returns an ordered List<node_info> repressenting the shortest path between src to dest.
+     * In here we use the same mechanism and algorithm used in the shortestPathDist() method
+     * But the main difference is we store each nodes parent (depends on the the scanning direction of the graph)
+     * and after we finished the scan, if we reached the destination, we build the path List by getting each nodes
+     * parent node from the parents Map.
      *
      * @param src  - start node
      * @param dest - end (target) node
-     * @return
+     * @return ordered List<node_info> containing the shortest path from src->dest ,null otherwise
      */
     @Override
     public List<node_info> shortestPath(int src, int dest) {
@@ -160,7 +166,20 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public boolean save(String file) {
-        return false;
+        try {
+            FileOutputStream f = new FileOutputStream (new File(file));
+            ObjectOutputStream  graph = new ObjectOutputStream (f);
+            graph.writeObject(this._g);
+            f.close();
+            graph.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
@@ -177,6 +196,10 @@ public class WGraph_Algo implements weighted_graph_algorithms {
         return false;
     }
 
+    /**
+     * Used to reset the tags and metadata of each node after finishing
+     * BFS and Dijkstra's algorithms
+     */
     public void reset() {
         for (node_info n : this._g.getV()) {
             if (n.getTag() != 0 || n.getInfo() != null) {

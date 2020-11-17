@@ -1,4 +1,4 @@
-![alt text](WikiPictures/wgraphpic.jpg)
+![alt text](WikiPictures/redgraph.gif)
 
 # Undirected & Unweighted Graph Java Implementation
   
@@ -70,6 +70,10 @@ The `getV()` method is used almost in every algorithm and iteration in this proj
   
 ### Dijkstra's Algorithm
 - https://www.coursera.org/lecture/advanced-data-structures/core-dijkstras-algorithm-2ctyF
+- https://en.wikipedia.org/wiki/Shortest_path_problem
 
 ### PriorityQueue and Comparable Usage
 - https://www.youtube.com/watch?v=c4ES6jGxqEw
+
+### Serialization
+- https://www.youtube.com/watch?v=6B6vp0jZnb0
