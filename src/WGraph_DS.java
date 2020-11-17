@@ -17,13 +17,13 @@ public class WGraph_DS implements weighted_graph {
         private NodeInfo() {
             this._key = _ncount;
             _ncount++;
-            this._tag = 0;
+            this._tag = -1;
             this._str = null;
         }
 
         private NodeInfo(int k) {
             this._key = k;
-            this._tag = 0;
+            this._tag = -1;
             this._str = null;
         }
         /**

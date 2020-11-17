@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.function.DoubleBinaryOperator;
 
 public class WGraph_Algo implements weighted_graph_algorithms {
     weighted_graph _g = new WGraph_DS();
@@ -87,36 +88,43 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public List<node_info> shortestPath(int src, int dest) {
+        if (this._g == null) return null;
         if (src == dest) return null;
         if (this._g.getNode(src) == null || this._g.getNode(dest) == null) return null;
-        PriorityQueue<node_info> pq = new PriorityQueue<node_info>();
-        HashSet<Integer> visited = new HashSet<>();
-        HashMap<Integer,Integer> parent = new HashMap<>();
+        PriorityQueue<node_info> pq = new PriorityQueue<>();
+        HashMap<node_info,node_info> parent = new HashMap<>();
         List<node_info> result = new ArrayList<>();
-        int cur = src;
-        this._g.getNode(src).setTag(0);
-        visited.add(src);
-        pq.add(this._g.getNode(src));
-        while (!pq.isEmpty() && cur!=dest) {
-            cur = pq.poll().getKey();
-            if (cur == dest) break;
-            for (node_info n : this._g.getV(cur)) {
-                if (!visited.contains(n.getKey())) {
-                    n.setTag(this._g.getNode(cur).getTag()+this._g.getEdge(cur,n.getKey()));
-                    visited.add(n.getKey());
-                    parent.put(n.getKey(),cur);
-                    pq.add(n);
+        node_info cur = this._g.getNode(src);
+        pq.add(cur);
+        cur.setTag(0);
+        while (!pq.isEmpty()) {
+            cur = pq.poll();
+            if (cur.getInfo() != "y") {
+                cur.setInfo("y");
+                if (cur.getKey() == dest) break;
+                for (node_info n : this._g.getV(cur.getKey())) {
+                    if (n.getTag() == -1) {
+                        n.setTag(Double.MAX_VALUE);
+                    }
+                    if (cur.getTag() < n.getTag()) {
+                        n.setTag(cur.getTag()+this._g.getEdge(cur.getKey(),n.getKey()));
+                        parent.put(cur,n);
+                        pq.add(n);
+                    }
                 }
-                if (n.getKey() == dest) break;
             }
         }
-        pq.clear();
-        if (!visited.contains(dest)) return null;
-        while (cur != src) {
-            result.add(0,this._g.getNode(cur));
+        if (this._g.getNode(dest).getInfo() != "y") return null;
+        while (cur.getKey() != src) {
+            result.add(0,parent.get(cur));
             cur = parent.get(cur);
         }
-        result.add(0,this._g.getNode(src));
+        for (node_info n : this._g.getV()) {
+            if (n.getTag() != 0 || n.getInfo() != null) {
+                n.setTag(-1);
+                n.setInfo(null);
+            }
+        }
         return result;
     }
 

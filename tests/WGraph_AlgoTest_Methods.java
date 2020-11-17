@@ -50,8 +50,7 @@ class WGraph_AlgoTest_Methods {
         g1.connect(11,12,1);
         WGraph_Algo ga1 = new WGraph_Algo();
         ga1.init(g1);
-        assertEquals(2,ga1.shortestPath(1,3).size());
-        for (node_info n : ga1.shortestPath(1,12)) {
+        for (node_info n : ga1.shortestPath(1,3)) {
             System.out.print(n.getKey() + "  ");
         }
     }
