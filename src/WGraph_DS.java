@@ -2,6 +2,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * This class implements the weighted_graph interface that represents a mathematical weighted graph
@@ -203,13 +204,13 @@ public class WGraph_DS implements weighted_graph, Serializable {
      * return true iff (if and only if) there is an edge between node1 and node2
      * Note: this method should run in O(1) time.
      *
-     * @param node1
-     * @param node2
+     * @param node1 - The first node to be checked
+     * @param node2 - The second node to be checked
      * @return
      */
     @Override
     public boolean hasEdge(int node1, int node2) {
-        if (node1 == node2) return false;
+        if (node1 == node2) return true;
         if (!this._g_nodes.containsKey(node1) || !this._g_nodes.containsKey(node2)) return false;
         return this._g_edges.get(node1)._n_edges.containsKey(node2);
     }
@@ -225,6 +226,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
      */
     @Override
     public double getEdge(int node1, int node2) {
+        if (node1 == node2) return 0;
         if (this._g_edges.get(node1)._n_edges.containsKey(node2)) {
             return this._g_edges.get(node1).getW(node2);
         }
@@ -236,7 +238,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
      * Note: this method should run in O(1) time.
      * Note2: if there is already a node with such a key -> no action should be performed.
      *
-     * @param key
+     * @param key - The key of the new node to be added to the graph
      */
     @Override
     public void addNode(int key) {
@@ -372,6 +374,87 @@ public class WGraph_DS implements weighted_graph, Serializable {
     @Override
     public int getMC() {
         return this._mc;
+    }
+
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     * <p>
+     * The {@code equals} method implements an equivalence relation
+     * on non-null object references:
+     * <ul>
+     * <li>It is <i>reflexive</i>: for any non-null reference value
+     *     {@code x}, {@code x.equals(x)} should return
+     *     {@code true}.
+     * <li>It is <i>symmetric</i>: for any non-null reference values
+     *     {@code x} and {@code y}, {@code x.equals(y)}
+     *     should return {@code true} if and only if
+     *     {@code y.equals(x)} returns {@code true}.
+     * <li>It is <i>transitive</i>: for any non-null reference values
+     *     {@code x}, {@code y}, and {@code z}, if
+     *     {@code x.equals(y)} returns {@code true} and
+     *     {@code y.equals(z)} returns {@code true}, then
+     *     {@code x.equals(z)} should return {@code true}.
+     * <li>It is <i>consistent</i>: for any non-null reference values
+     *     {@code x} and {@code y}, multiple invocations of
+     *     {@code x.equals(y)} consistently return {@code true}
+     *     or consistently return {@code false}, provided no
+     *     information used in {@code equals} comparisons on the
+     *     objects is modified.
+     * <li>For any non-null reference value {@code x},
+     *     {@code x.equals(null)} should return {@code false}.
+     * </ul>
+     * <p>
+     * The {@code equals} method for class {@code Object} implements
+     * the most discriminating possible equivalence relation on objects;
+     * that is, for any non-null reference values {@code x} and
+     * {@code y}, this method returns {@code true} if and only
+     * if {@code x} and {@code y} refer to the same object
+     * ({@code x == y} has the value {@code true}).
+     * <p>
+     * Note that it is generally necessary to override the {@code hashCode}
+     * method whenever this method is overridden, so as to maintain the
+     * general contract for the {@code hashCode} method, which states
+     * that equal objects must have equal hash codes.
+     *
+     * @param obj the reference object with which to compare.
+     * @return {@code true} if this object is the same as the obj
+     * argument; {@code false} otherwise.
+     * @see #hashCode()
+     * @see HashMap
+     */
+    @Override
+    public boolean equals(Object obj) {
+        weighted_graph g_obj = (WGraph_DS) obj;
+        if (this._e_size != g_obj.edgeSize() || this.nodeSize() != g_obj.nodeSize()) return false;
+        return Objects.equals(this.toString(), g_obj.toString());
+    }
+
+    /**
+     * Returns a string representation of the graph.
+     * It is recommended that all subclasses override this method.
+     * <p>
+     * The {@code toString} method for class {@code Object}
+     * returns a string consisting of the name of the class of which the
+     * object is an instance, the at-sign character `{@code @}', and
+     * the unsigned hexadecimal representation of the hash code of the
+     * object. In other words, this method returns a string equal to the
+     * value of:
+     * <blockquote>
+     * <pre>
+     * getClass().getName() + '@' + Integer.toHexString(hashCode())
+     * </pre></blockquote>
+     *
+     * @return a string representation of the object.
+     */
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append("Total Nodes: ").append(this.nodeSize()).append(" Total edges: ").append(this._e_size).append("\n");
+        for (node_info n : this.getV()) {
+            result.append("Node: ").append(n.getKey()).append(" Ni count: ").append(this._g_edges.get(n.getKey()).getNiSize());
+            result.append("\n");
+        }
+        return result.toString();
     }
 }
 
