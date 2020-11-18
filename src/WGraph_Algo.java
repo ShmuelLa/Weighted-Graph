@@ -1,9 +1,18 @@
 import java.io.*;
 import java.util.*;
-import java.util.function.DoubleBinaryOperator;
 
+/**
+ * This class implements the weighted_graph_algorithms interface that represents algorithms to run on a
+ * weighted_graph object. This class implements a few main methods including a deep copy method,
+ * isConnected to check graph connectivity (implemented via BFS algorithm), shortest path and
+ * shortest length method between two nodes (implemented via Dijkstra's algorithm)
+ * and file save and load method via serialization.
+ *
+ * @author shmuel.lavian
+ */
 public class WGraph_Algo implements weighted_graph_algorithms {
     weighted_graph _g = new WGraph_DS();
+
 
     /**
      * Initialize the the graph on which this set of algorithms operates on by pointing a Graph_DS object.
@@ -86,7 +95,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
         cur.setTag(0);
         while (!pq.isEmpty()) {
             cur = pq.poll();
-            if (cur.getInfo() != "y") {
+            if (!Objects.equals(cur.getInfo(), "y")) {
                 cur.setInfo("y");
                 if (cur.getKey() == dest) break;
                 for (node_info n : this._g.getV(cur.getKey())) {
@@ -103,7 +112,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
         }
         cur = this._g.getNode(dest);
         result = cur.getTag();
-        if (cur.getInfo() != "y") return -1;
+        if (!Objects.equals(cur.getInfo(), "y")) return -1;
         this.reset();
         return result;
     }
@@ -130,7 +139,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
         cur.setTag(0);
         while (!pq.isEmpty()) {
             cur = pq.poll();
-            if (cur.getInfo() != "y") {
+            if (!Objects.equals(cur.getInfo(), "y")) {
                 cur.setInfo("y");
                 if (cur.getKey() == dest) break;
                 for (node_info n : this._g.getV(cur.getKey())) {
@@ -147,7 +156,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
             }
         }
         cur = this._g.getNode(dest);
-        if (cur.getInfo() != "y") return null;
+        if (!Objects.equals(cur.getInfo(), "y")) return null;
         result.add(0,cur);
         while (cur.getKey() != src) {
             result.add(0,parent.get(cur));
@@ -167,11 +176,9 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     @Override
     public boolean save(String file) {
         try {
-            FileOutputStream f = new FileOutputStream (new File(file));
+            FileOutputStream f = new FileOutputStream (file, true);
             ObjectOutputStream  graph = new ObjectOutputStream (f);
             graph.writeObject(this._g);
-            f.close();
-            graph.close();
             return true;
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -193,7 +200,18 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public boolean load(String file) {
-        return false;
+        try {
+            FileInputStream fi = new FileInputStream(file);
+            ObjectInputStream gr = new ObjectInputStream(fi);
+            weighted_graph loaded_g = (WGraph_DS) gr.readObject();
+            this._g = null;
+            this._g = loaded_g;
+            return true;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     /**

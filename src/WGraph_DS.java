@@ -8,13 +8,8 @@ import java.util.HashMap;
  * it implements two classes internally:
  * 1 - NodeInfo which implements node_info interface which includes the information and methods each node stores
  * 2 - EdgeInfo which stores all the data and methods for all the edges in the graph
- *
- *
- *
- * each graph consists of two data structures. One for the node and one for the edges.
- * has an integer that count the edges of the graph and a mode count that counts any change in
- * the inner state of the graph. Also we implemented a HashMap data structure
- * to point to each of the graph nodes.
+ * Each graph consists of two HashMap data structures. One for the node and the other for the edges.
+ * Each graph also has an integers that count the edges and the mode count (internal changes count) of the graph
  *
  * @author shmuel.lavian
  */
@@ -25,7 +20,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
     private int _mc;
     private static int _ncount = 0;
 
-    private class NodeInfo implements node_info, Comparable<node_info> {
+    private class NodeInfo implements node_info, Comparable<node_info>, Serializable {
         private int _key;
         private double _tag;
         private String _str;
@@ -46,7 +41,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
          * Return the key (id) associated with this node.
          * Note: each node_data should have a unique key.
          *
-         * @return
+         * @return INT - The key ID
          */
         @Override
         public int getKey() {
@@ -56,7 +51,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
         /**
          * return the remark (meta data) associated with this node.
          *
-         * @return
+         * @return String - The nodes meta data
          */
         @Override
         public String getInfo() {
@@ -66,7 +61,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
         /**
          * Allows changing the remark (meta data) associated with this node.
          *
-         * @param s
+         * @param s - The new nodes String meta data
          */
         @Override
         public void setInfo(String s) {
@@ -77,7 +72,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
          * Temporal data (aka distance, color, or state)
          * which can be used be algorithms
          *
-         * @return
+         * @return - The new nodes double tag
          */
         @Override
         public double getTag() {
@@ -142,7 +137,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
         }
     }
 
-    private class EdgeInfo {
+    private class EdgeInfo implements Serializable {
         private HashMap<Integer,Double> _n_edges;
 
         private EdgeInfo() {
