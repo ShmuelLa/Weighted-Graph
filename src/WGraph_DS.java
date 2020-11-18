@@ -319,13 +319,16 @@ public class WGraph_DS implements weighted_graph, Serializable {
     @Override
     public node_info removeNode(int key) {
         if (!this._g_nodes.containsKey(key)) return null;
-        node_info tmo_n = this._g_nodes.get(key);
+        node_info tmp_n = this._g_nodes.get(key);
+        for (node_info n : this.getV(key)) {
+            this.removeEdge(n.getKey(),key);
+        }
         this._g_nodes.remove(key);
         _mc = _mc+this._g_edges.get(key).getNiSize();
         _e_size = _e_size-this._g_edges.get(key).getNiSize();
         this._g_edges.get(key).removeSrc();
         this._g_edges.remove(key);
-        return tmo_n;
+        return tmp_n;
     }
 
     /**

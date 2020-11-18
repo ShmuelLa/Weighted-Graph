@@ -41,7 +41,8 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public weighted_graph copy() {
-        return null;
+        weighted_graph result = new WGraph_DS();
+        return result;
     }
 
     /**
@@ -56,21 +57,23 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     @Override
     public boolean isConnected() {
         if (this._g.nodeSize() <= 1 || this._g == null) return true;
-        Queue<Integer> queue = new LinkedList<>();
-        int tmp_key=this._g.getV().iterator().next().getKey();
-        HashSet<Integer> visited = new HashSet<>();
-        queue.add(tmp_key);
-        visited.add(tmp_key);
+        Queue<node_info> queue = new LinkedList<>();
+        node_info tmp_n = this._g.getV().iterator().next();
+        int n_counter = 1;
+        queue.add(tmp_n);
+        tmp_n.setTag(1);
         while (!queue.isEmpty()) {
-            tmp_key=queue.poll();
-            for (node_info node : this._g.getV(tmp_key)) {
-                if (!visited.contains(node.getKey())) {
-                    visited.add(node.getKey());
-                    queue.add(node.getKey());
+            tmp_n=queue.poll();
+            for (node_info node : this._g.getV(tmp_n.getKey())) {
+                if (node.getTag() != 1) {
+                    n_counter++;
+                    node.setTag(1);
+                    queue.add(node);
                 }
             }
         }
-        return visited.size() == this._g.nodeSize();
+        this.reset();
+        return n_counter == this._g.nodeSize();
     }
 
     /**
