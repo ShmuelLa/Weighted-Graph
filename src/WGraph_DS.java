@@ -19,7 +19,6 @@ public class WGraph_DS implements weighted_graph, Serializable {
     private HashMap<Integer,EdgeInfo> _g_edges;
     private int _e_size;
     private int _mc;
-    private static int _ncount = 0;
 
     /**
      * This internal class implements the node_info interface that represents a single vertex (node) in a graph,
@@ -124,43 +123,101 @@ public class WGraph_DS implements weighted_graph, Serializable {
     private class EdgeInfo implements Serializable {
         private HashMap<node_info,Double> _n_edges;
 
+        /**
+         * The methods default constructor, Creates a new EdgeInfo class
+         * With a new Map
+         */
         private EdgeInfo() {
             this._n_edges = new HashMap<>();
         }
 
+        /**
+         * Sets the weight of a specific node between this->destination
+         * This is a one way change and is being used twice in the super classes
+         * connect method in order to provide a bidirectional connection
+         *
+         * @param dest - The destination node
+         * @param w - The weight to be set
+         */
         private void setWeight(int dest, double w) {
             this._n_edges.put(_g_nodes.get(dest),w);
         }
 
+        /**
+         * Connects this to->destination node with an edge.
+         * This is a one way change and is being used twice in the super classes
+         * connect method in order to provide a bidirectional connection
+         *
+         * @param n - The destination node
+         * @param w - The weight to be set
+         */
         private void connectE(int n, double w) {
             this._n_edges.put(_g_nodes.get(n),w);
         }
 
+        /**
+         * Checks if this node contains a neighbor with the received ID
+         *
+         * @param n - The received node to check
+         * @return Boolean - True the the connections exists, False otherwise
+         */
         private boolean hasNi(int n) {
             return this._n_edges.containsKey(_g_nodes.get(n));
         }
 
+        /**
+         * Returns a Collections representing all the neighbors of a specific node
+         * This method uses the HashMap keyset() method with O(1) complexity
+         *
+         * @return - Collection<node_info> of the nodes neighbors
+         */
         private Collection<node_info> getNi() {
             return new ArrayList<>(this._n_edges.keySet());
         }
 
+        /**
+         * Returns the edge weight between this and -> dest node
+         *
+         * @param dest_key - The destination node ID
+         * @return double - The edge weight value
+         */
         private double getW(int dest_key) {
             return this._n_edges.get(_g_nodes.get(dest_key));
         }
 
+        /**
+         * Clears the HashMap containing all this nodes neighbors,
+         * This method is implemented for the super classes RemoveNode method
+         */
         private void removeSrc() {
             this._n_edges.clear();
         }
 
+        /**
+         * Returns the number of the connected nodes to this node ID
+         *
+         * @return int - The number of nodes connected to this node
+         */
         private int getNiSize() {
             return this._n_edges.size();
         }
 
+        /**
+         * Removed the edge between this and -> dest node
+         * This is a one way change and is being used twice in the super classes methods
+         * in order to provide a bidirectional operation
+         *
+         * @param e - The received node ID to connect the edge to
+         */
         private void removeEd(int e) {
             this._n_edges.remove(_g_nodes.get(e));
         }
     }
 
+    /**
+     * The default Graph_DS constructor. Creates a new graph with empty nodes and edges Map
+     * alongside initialized edge counted and mod count
+     */
     public WGraph_DS() {
         this._g_nodes = new HashMap<>();
         this._g_edges = new HashMap<>();
@@ -169,10 +226,10 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * return the node_data by the node_id,
+     * Returns a pointer to the specific the node_info by the node ID
      *
      * @param key - the node_id
-     * @return the node_data by the node_id, null if none.
+     * @return node_info - The specified node info object
      */
     @Override
     public node_info getNode(int key) {
@@ -180,12 +237,13 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * return true iff (if and only if) there is an edge between node1 and node2
-     * Note: this method should run in O(1) time.
+     * Checks if the is an edge between two nodes. Return true if and only if true.
+     * Note: Each node by definition is connected to itself.
+     * This method runs in a constant O(1) time.
      *
-     * @param node1 - The first node to be checked
-     * @param node2 - The second node to be checked
-     * @return
+     * @param node1 - first node id to check
+     * @param node2 - second node id to check
+     * @return True if and only if there is and edge. False in any other case
      */
     @Override
     public boolean hasEdge(int node1, int node2) {
@@ -195,13 +253,12 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * return the weight if the edge (node1, node1). In case
-     * there is no such edge - should return -1
-     * Note: this method should run in O(1) time.
+     * Returns the weight value between two nodes.
+     * This method runs in a constant O(1) time.
      *
-     * @param node1
-     * @param node2
-     * @return
+     * @param node1 - First node
+     * @param node2 - Second node
+     * @return double - The value of the edge between the two node, -1 if the edge doesn't exist
      */
     @Override
     public double getEdge(int node1, int node2) {
@@ -213,11 +270,10 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * add a new node to the graph with the given key.
-     * Note: this method should run in O(1) time.
-     * Note2: if there is already a node with such a key -> no action should be performed.
+     * Adds a new node to the graph with the given key ID.
+     * This method runs in a constant O(1) time.
      *
-     * @param key - The key of the new node to be added to the graph
+     * @param key - The key of the new node to be added to the graph, if exists conducts no action
      */
     @Override
     public void addNode(int key) {
@@ -231,13 +287,14 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * Connect an edge between node1 and node2, with an edge with weight >=0.
-     * Note: this method should run in O(1) time.
-     * Note2: if the edge node1-node2 already exists - the method simply updates the weight of the edge.
+     * Connects an edge between node1 and node2 with the given weight.
+     * Increments the edge and mode count accordingly. Does nothing if the edge with same weight already exists.
+     * Otherwise just updates the weight.
+     * This method runs in a constant O(1) time.
      *
-     * @param node1
-     * @param node2
-     * @param w
+     * @param node1 - First node
+     * @param node2 - Second node
+     * @param w - Given weight to be set between them
      */
     @Override
     public void connect(int node1, int node2, double w) {
@@ -256,6 +313,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
                 }
                 else {
                     this._g_edges.get(node1).setWeight(node2,w);
+                    this._g_edges.get(node2).setWeight(node1,w);
                     _mc++;
                 }
             }
@@ -263,11 +321,10 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * This method return a pointer (shallow copy) for a
-     * Collection representing all the nodes in the graph.
-     * Note: this method should run in O(1) tim
+     * Return a pointer to a collection representing all the nodes in the graph.
+     * This method runs in a constant O(1) time by using the values() method implemented in HashMap.
      *
-     * @return Collection<node_data>
+     * @return Collection<node_info> - shallow copy to the nodes Map
      */
     @Override
     public Collection<node_info> getV() {
@@ -275,12 +332,12 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * This method returns a Collection containing all the
-     * nodes connected to node_id
-     * Note: this method can run in O(k) time, k - being the degree of node_id.
+     * This method returns a Collection containing all the nodes connected to the given node ID
+     * by using the inner classes getNI method.
+     * Run in O(k) time, k - being the degree of node_id.
      *
-     * @param node_id
-     * @return Collection<node_data>
+     * @param node_id - The received node to iterate on
+     * @return Collection<node_info> containing this nodes connected neighbors
      */
     @Override
     public Collection<node_info> getV(int node_id) {
@@ -290,10 +347,9 @@ public class WGraph_DS implements weighted_graph, Serializable {
     /**
      * Delete the node (with the given ID) from the graph -
      * and removes all edges which starts or ends at this node.
-     * This method should run in O(n), |V|=n, as all the edges should be removed.
      *
-     * @param key
-     * @return the data of the removed node (null if none).
+     * @param key - Node ID to be deleted
+     * @return node_info - of the deleted node, null if none exists
      */
     @Override
     public node_info removeNode(int key) {
@@ -311,11 +367,11 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * Delete the edge from the graph,
-     * Note: this method should run in O(1) time.
+     * Removes an edge between two nodes in the graph.
+     * Runs in a constant O(1) time.
      *
-     * @param node1
-     * @param node2
+     * @param node1 - First node ID
+     * @param node2 - Second node ID
      */
     @Override
     public void removeEdge(int node1, int node2) {
@@ -326,10 +382,10 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * return the number of vertices (nodes) in the graph.
-     * Note: this method should run in O(1) time.
+     * Returns the number of nodes in the graph.
+     * Runs in a constant O(1) time.
      *
-     * @return
+     * @return INT - number of nodes in the graph
      */
     @Override
     public int nodeSize() {
@@ -337,10 +393,10 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * return the number of edges (undirectional graph).
-     * Note: this method should run in O(1) time.
+     * Return the number of edges in the graph.
+     * Runs in a constant O(1) time.
      *
-     * @return
+     * @return INT - number of edges in the graph
      */
     @Override
     public int edgeSize() {
@@ -348,10 +404,10 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * return the Mode Count - for testing changes in the graph.
-     * Any change in the inner state of the graph should cause an increment in the ModeCount
+     * Returns the Mode Count (inner changes counter) of the graph.
+     * Any change in the inner state of the graph causes ModeCount incrementation
      *
-     * @return
+     * @return INT - The graph's mode count
      */
     @Override
     public int getMC() {
@@ -359,50 +415,15 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * Indicates whether some other object is "equal to" this one.
-     * <p>
-     * The {@code equals} method implements an equivalence relation
-     * on non-null object references:
-     * <ul>
-     * <li>It is <i>reflexive</i>: for any non-null reference value
-     *     {@code x}, {@code x.equals(x)} should return
-     *     {@code true}.
-     * <li>It is <i>symmetric</i>: for any non-null reference values
-     *     {@code x} and {@code y}, {@code x.equals(y)}
-     *     should return {@code true} if and only if
-     *     {@code y.equals(x)} returns {@code true}.
-     * <li>It is <i>transitive</i>: for any non-null reference values
-     *     {@code x}, {@code y}, and {@code z}, if
-     *     {@code x.equals(y)} returns {@code true} and
-     *     {@code y.equals(z)} returns {@code true}, then
-     *     {@code x.equals(z)} should return {@code true}.
-     * <li>It is <i>consistent</i>: for any non-null reference values
-     *     {@code x} and {@code y}, multiple invocations of
-     *     {@code x.equals(y)} consistently return {@code true}
-     *     or consistently return {@code false}, provided no
-     *     information used in {@code equals} comparisons on the
-     *     objects is modified.
-     * <li>For any non-null reference value {@code x},
-     *     {@code x.equals(null)} should return {@code false}.
-     * </ul>
-     * <p>
-     * The {@code equals} method for class {@code Object} implements
-     * the most discriminating possible equivalence relation on objects;
-     * that is, for any non-null reference values {@code x} and
-     * {@code y}, this method returns {@code true} if and only
-     * if {@code x} and {@code y} refer to the same object
-     * ({@code x == y} has the value {@code true}).
-     * <p>
-     * Note that it is generally necessary to override the {@code hashCode}
-     * method whenever this method is overridden, so as to maintain the
-     * general contract for the {@code hashCode} method, which states
-     * that equal objects must have equal hash codes.
+     * This method overrides the equals method from Object interface.
+     * It is used for graph comparing. Used vastly in testing and debugging.
+     * It uses the toString method which is override as well for this project.
+     *
+     * For more information and for the full doc:
+     * https://docs.oracle.com/javase/7/docs/api/java/lang/Object.html
      *
      * @param obj the reference object with which to compare.
-     * @return {@code true} if this object is the same as the obj
-     * argument; {@code false} otherwise.
-     * @see #hashCode()
-     * @see HashMap
+     * @return boolean - if this object is the same as the obj
      */
     @Override
     public boolean equals(Object obj) {
@@ -412,21 +433,14 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * Returns a string representation of the graph.
-     * It is recommended that all subclasses override this method.
-     * <p>
-     * The {@code toString} method for class {@code Object}
-     * returns a string consisting of the name of the class of which the
-     * object is an instance, the at-sign character `{@code @}', and
-     * the unsigned hexadecimal representation of the hash code of the
-     * object. In other words, this method returns a string equal to the
-     * value of:
-     * <blockquote>
-     * <pre>
-     * getClass().getName() + '@' + Integer.toHexString(hashCode())
-     * </pre></blockquote>
+     * Returns a string representation of the graph. This method overrides Objects
+     * toString() method. It represents each and every node Id in the graph alongside with it's neighbor count.
+     * this method also records the node and edge size of the graph.
      *
-     * @return a string representation of the object.
+     * For more information and for the full doc:
+     * https://docs.oracle.com/javase/7/docs/api/java/lang/Object.html
+     *
+     * @return String - representation of the graph.
      */
     @Override
     public String toString() {

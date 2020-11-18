@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.Date;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,7 +27,6 @@ public class Ex1_Tests {
             }
             if (result.edgeSize() >= e_size) break;
         }
-
         return result;
     }
 
@@ -47,6 +45,16 @@ public class Ex1_Tests {
             result = rnd_int.nextInt(n_size);
         }
         return result;
+    }
+
+    @Test
+    @DisplayName("Copy test")
+    void copy() {
+        weighted_graph gr = graph_creator(5,10);
+        weighted_graph_algorithms gra = new WGraph_Algo();
+        gra.init(gr);
+        weighted_graph gr2 = gra.copy();
+        assertEquals(gr,gr2);
     }
 
     @Test
@@ -171,14 +179,5 @@ public class Ex1_Tests {
         g1.connect(7,11,9);
         g1.connect(11,12,1);
         System.out.println(g1.toString());
-    }
-
-    @Test
-    @DisplayName("1M v, 10M e graph time test")
-    void Time() {
-        Long start = new Date().getTime();
-        weighted_graph g1 = graph_creator(1000000,10000000);
-        Long end = new Date().getTime();
-        if ((end-start)/1000.0 > 20) fail();
     }
 }

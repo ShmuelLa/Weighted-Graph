@@ -42,6 +42,15 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     @Override
     public weighted_graph copy() {
         weighted_graph result = new WGraph_DS();
+        if (this._g == null) return null;
+        for (node_info n : this._g.getV()) {
+            result.addNode(n.getKey());
+        }
+        for (node_info n : this._g.getV()) {
+            for (node_info inner : this._g.getV(n.getKey())) {
+                result.connect(n.getKey(),inner.getKey(),this._g.getEdge(n.getKey(),inner.getKey()));
+            }
+        }
         return result;
     }
 
@@ -192,13 +201,10 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     }
 
     /**
-     * This method load a graph to this graph algorithm.
-     * if the file was successfully loaded - the underlying graph
-     * of this class will be changed (to the loaded one), in case the
-     * graph was not loaded the original graph should remain "as is".
+     * Loads a graph from a file to this graph_algo. Overrides the underlying graph.
      *
-     * @param file - file name
-     * @return true - iff the graph was successfully loaded.
+     * @param file - file name or path
+     * @return true - iff the graph was successfully loaded. Changes the underlying graph
      */
     @Override
     public boolean load(String file) {
