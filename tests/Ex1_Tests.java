@@ -1,37 +1,78 @@
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.Date;
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Ex1_Tests {
 
-    @BeforeAll
-    static void g_creator() {
+    /**
+     * Creates a graph with the given node and edge size. The graph is created and connected
+     * by randomizing the connected nodes and the connection weight for each and every connection
+     *
+     * @param n_size
+     * @param e_size
+     * @return
+     */
+    public static weighted_graph graph_creator(int n_size, int e_size){
+        weighted_graph result = new WGraph_DS();
+        for (int i=0; i<n_size; i++) {
+            result.addNode(i);
+        }
+        Random rnd_dbl = new Random();
+        while (result.edgeSize() < e_size) {
+            for (node_info n : result.getV()) {
+                result.connect(n.getKey(),rndInt(n.getKey(),n_size),rnd_dbl.nextDouble());
+                if (result.edgeSize() >= e_size) break;
+            }
+            if (result.edgeSize() >= e_size) break;
+        }
+
+        return result;
+    }
+
+    /**
+     * This method was created for randomising the connections for the graph creator
+     * if prevents the connected node ID to be equal or outside of graph bounds
+     *
+     * @param n_id - The node to be connected
+     * @param n_size - The node size of the graph
+     * @return INT - The node ID chosen to be connected
+     */
+    private static int rndInt(int n_id, int n_size) {
+        Random rnd_int = new Random();
+        int result = rnd_int.nextInt(n_size);
+        while (result==0 || result > n_size || result==n_id) {
+            result = rnd_int.nextInt(n_size);
+        }
+        return result;
     }
 
     @Test
-    @DisplayName("Elad test")
-    void elad() {
+    @DisplayName("Connectivity check before and after changes")
+    void isConnected() {
         WGraph_DS graph = new WGraph_DS();
         weighted_graph_algorithms algo = new WGraph_Algo();
         algo.init(graph);
         for (int i = 0; i <= 5; i++) {
             graph.addNode(i);
         }
-        graph.connect(0,2,6);
-        graph.connect(0,1,4);
+        graph.connect(0,2,2);
+        graph.connect(0,1,2);
         graph.connect(1,3,2);
-        graph.connect(2,3,4/5);
-        graph.connect(3,4,4.3);
-        graph.connect(4,5,4);
-        graph.connect(0,5,6);
+        graph.connect(2,3,2);
+        graph.connect(3,4,2);
+        graph.connect(4,5,2);
+        graph.connect(0,5,2);
         algo.init(graph);
-        System.out.println( "edge" + graph.edgeSize());
-        System.out.println("nodes"+graph.nodeSize());
-        System.out.println(algo.isConnected());
+        assertTrue(algo.isConnected());
         graph.removeNode(5);
-        System.out.println(algo.isConnected());
-        assertEquals(true,algo.isConnected());
+        assertTrue(algo.isConnected());
+        graph.removeNode(0);
+        assertTrue(algo.isConnected());
+        graph.removeNode(3);
+        assertFalse(algo.isConnected());
     }
 
     @Test
@@ -130,5 +171,14 @@ public class Ex1_Tests {
         g1.connect(7,11,9);
         g1.connect(11,12,1);
         System.out.println(g1.toString());
+    }
+
+    @Test
+    @DisplayName("1M v, 10M e graph time test")
+    void Time() {
+        Long start = new Date().getTime();
+        weighted_graph g1 = graph_creator(1000000,10000000);
+        Long end = new Date().getTime();
+        if ((end-start)/1000.0 > 20) fail();
     }
 }

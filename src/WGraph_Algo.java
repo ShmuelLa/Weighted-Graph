@@ -58,22 +58,20 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     public boolean isConnected() {
         if (this._g.nodeSize() <= 1 || this._g == null) return true;
         Queue<node_info> queue = new LinkedList<>();
+        HashSet<node_info> visited = new HashSet<>();
         node_info tmp_n = this._g.getV().iterator().next();
-        int n_counter = 1;
         queue.add(tmp_n);
-        tmp_n.setTag(1);
+        visited.add(tmp_n);
         while (!queue.isEmpty()) {
             tmp_n=queue.poll();
             for (node_info node : this._g.getV(tmp_n.getKey())) {
-                if (node.getTag() != 1) {
-                    n_counter++;
-                    node.setTag(1);
+                if (!visited.contains(node)) {
+                    visited.add(node);
                     queue.add(node);
                 }
             }
         }
-        this.reset();
-        return n_counter == this._g.nodeSize();
+        return visited.size() == this._g.nodeSize();
     }
 
     /**
@@ -142,7 +140,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
         cur.setTag(0);
         while (!pq.isEmpty()) {
             cur = pq.poll();
-            if (!Objects.equals(cur.getInfo(), "y")) {
+            if (!Objects.equals(cur.getInfo(),"y")) {
                 cur.setInfo("y");
                 if (cur.getKey() == dest) break;
                 for (node_info n : this._g.getV(cur.getKey())) {

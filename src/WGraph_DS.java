@@ -21,26 +21,31 @@ public class WGraph_DS implements weighted_graph, Serializable {
     private int _mc;
     private static int _ncount = 0;
 
+    /**
+     * This internal class implements the node_info interface that represents a single vertex (node) in a graph,
+     * Each vertex implemented with a unique integer key for access, a double tag for algorithmic usage
+     * and a String for metadata. For each of those fields this class has a method to get or set them accordingly.
+     * This class is implemented internally to avoid wrong usage of the graph.
+     */
     private class NodeInfo implements node_info, Comparable<node_info>, Serializable {
         private int _key;
         private double _tag;
         private String _str;
 
-        private NodeInfo() {
-            this._key = _ncount;
-            _ncount++;
-            this._tag = -1;
-            this._str = null;
-        }
-
+        /**
+         * The main node_info constructor. Creates a new node with the received ID
+         *
+         * @param k - The ID to be set for the new node
+         */
         private NodeInfo(int k) {
             this._key = k;
             this._tag = -1;
             this._str = null;
         }
+
         /**
-         * Return the key (id) associated with this node.
-         * Note: each node_data should have a unique key.
+         * Return the key (ID) associated with this node.
+         * Each node_data should has a unique ID.
          *
          * @return INT - The key ID
          */
@@ -52,7 +57,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
         /**
          * return the remark (meta data) associated with this node.
          *
-         * @return String - The nodes meta data
+         * @return String - This nodes meta data
          */
         @Override
         public String getInfo() {
@@ -60,7 +65,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
         }
 
         /**
-         * Allows changing the remark (meta data) associated with this node.
+         * Allows changing the meta data associated with this node.
          *
          * @param s - The new nodes String meta data
          */
@@ -70,10 +75,10 @@ public class WGraph_DS implements weighted_graph, Serializable {
         }
 
         /**
-         * Temporal data (aka distance, color, or state)
-         * which can be used be algorithms
+         * Returns the temporal data (aka distance, color, or state)
+         * The tag is used for algorithmic purposes.
          *
-         * @return - The new nodes double tag
+         * @return double - The nodes tag values
          */
         @Override
         public double getTag() {
@@ -81,10 +86,9 @@ public class WGraph_DS implements weighted_graph, Serializable {
         }
 
         /**
-         * Allow setting the "tag" value for temporal marking an node - common
-         * practice for marking by algorithms.
+         * Sets the nodes tag value.
          *
-         * @param t - the new value of the tag
+         * @param t - the new value of the nodes tag
          */
         @Override
         public void setTag(double t) {
@@ -92,43 +96,16 @@ public class WGraph_DS implements weighted_graph, Serializable {
         }
 
         /**
-         * Compares this object with the specified object for order.  Returns a
-         * negative integer, zero, or a positive integer as this object is less
-         * than, equal to, or greater than the specified object.
-         *
-         * <p>The implementor must ensure
-         * {@code sgn(x.compareTo(y)) == -sgn(y.compareTo(x))}
-         * for all {@code x} and {@code y}.  (This
-         * implies that {@code x.compareTo(y)} must throw an exception iff
-         * {@code y.compareTo(x)} throws an exception.)
-         *
-         * <p>The implementor must also ensure that the relation is transitive:
-         * {@code (x.compareTo(y) > 0 && y.compareTo(z) > 0)} implies
-         * {@code x.compareTo(z) > 0}.
-         *
-         * <p>Finally, the implementor must ensure that {@code x.compareTo(y)==0}
-         * implies that {@code sgn(x.compareTo(z)) == sgn(y.compareTo(z))}, for
-         * all {@code z}.
-         *
-         * <p>It is strongly recommended, but <i>not</i> strictly required that
-         * {@code (x.compareTo(y)==0) == (x.equals(y))}.  Generally speaking, any
-         * class that implements the {@code Comparable} interface and violates
-         * this condition should clearly indicate this fact.  The recommended
-         * language is "Note: this class has a natural ordering that is
-         * inconsistent with equals."
-         *
-         * <p>In the foregoing description, the notation
-         * {@code sgn(}<i>expression</i>{@code )} designates the mathematical
-         * <i>signum</i> function, which is defined to return one of {@code -1},
-         * {@code 0}, or {@code 1} according to whether the value of
-         * <i>expression</i> is negative, zero, or positive, respectively.
+         * Overrides the compareTo() method implemented by Comparable interface
+         * This method is used to compare the tag value of two nodes and used in this project solely
+         * for comparing the minimal distance in the shortestPath method based on Dijkstra's algorithm
+         * This method prevents NullPointerException and ClassCastException bt catching them before comparing.
+         * For more information about the comparable interface:
+         * https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html
          *
          * @param o the object to be compared.
          * @return a negative integer, zero, or a positive integer as this object
          * is less than, equal to, or greater than the specified object.
-         * @throws NullPointerException if the specified object is null
-         * @throws ClassCastException   if the specified object's type prevents it
-         *                              from being compared to this object.
          */
         @Override
         public int compareTo(node_info o) {
@@ -138,35 +115,37 @@ public class WGraph_DS implements weighted_graph, Serializable {
         }
     }
 
+    /**
+     * This internal class implements the edges in the graph. It was added on top of the
+     * given interfaces for improved performance and usability. Each node on the graph has and EdgeInfo
+     * that contains all of it's edges and their weights accordingly. This class also implements more
+     * outside of the node_info interface for greater flexibility in the project.
+     */
     private class EdgeInfo implements Serializable {
-        private HashMap<Integer,Double> _n_edges;
+        private HashMap<node_info,Double> _n_edges;
 
         private EdgeInfo() {
             this._n_edges = new HashMap<>();
         }
 
         private void setWeight(int dest, double w) {
-            this._n_edges.put(dest,w);
+            this._n_edges.put(_g_nodes.get(dest),w);
         }
 
         private void connectE(int n, double w) {
-            this._n_edges.put(n,w);
+            this._n_edges.put(_g_nodes.get(n),w);
         }
 
         private boolean hasNi(int n) {
-            return this._n_edges.containsKey(n);
+            return this._n_edges.containsKey(_g_nodes.get(n));
         }
 
         private Collection<node_info> getNi() {
-            Collection<node_info> ni_list = new ArrayList<>();
-            for (Integer k : this._n_edges.keySet()) {
-                ni_list.add(_g_nodes.get(k));
-            }
-            return ni_list;
+            return new ArrayList<>(this._n_edges.keySet());
         }
 
         private double getW(int dest_key) {
-            return this._n_edges.get(dest_key);
+            return this._n_edges.get(_g_nodes.get(dest_key));
         }
 
         private void removeSrc() {
@@ -178,7 +157,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
         }
 
         private void removeEd(int e) {
-            this._n_edges.remove(e);
+            this._n_edges.remove(_g_nodes.get(e));
         }
     }
 
@@ -212,7 +191,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
     public boolean hasEdge(int node1, int node2) {
         if (node1 == node2) return true;
         if (!this._g_nodes.containsKey(node1) || !this._g_nodes.containsKey(node2)) return false;
-        return this._g_edges.get(node1)._n_edges.containsKey(node2);
+        return this._g_edges.get(node1)._n_edges.containsKey(this.getNode(node2));
     }
 
     /**
@@ -227,7 +206,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
     @Override
     public double getEdge(int node1, int node2) {
         if (node1 == node2) return 0;
-        if (this._g_edges.get(node1)._n_edges.containsKey(node2)) {
+        if (this._g_edges.get(node1)._n_edges.containsKey(this.getNode(node2))) {
             return this._g_edges.get(node1).getW(node2);
         }
         else return -1;
