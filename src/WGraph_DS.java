@@ -1,8 +1,5 @@
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * This class implements the weighted_graph interface that represents a mathematical weighted graph
@@ -298,7 +295,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
      */
     @Override
     public void connect(int node1, int node2, double w) {
-        if (node1 == node2) return;
+        if (node1 == node2 || w < 0) return;
         if (this._g_edges.containsKey(node1) && this._g_edges.containsKey(node2)) {
             if (this._g_edges.containsKey(node1) && !this._g_edges.get(node1).hasNi(node2)) {
                 this._g_edges.get(node1).connectE(node2,w);
@@ -445,9 +442,19 @@ public class WGraph_DS implements weighted_graph, Serializable {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append("Total Nodes: ").append(this.nodeSize()).append(" Total edges: ").append(this._e_size).append("\n");
+        SortedSet<Integer> s_ni = new TreeSet<>();
+        result.append("Total Nodes: ").append(this.nodeSize()).append(" Total edges: ").append(this._e_size);
+        result.append("\n");
         for (node_info n : this.getV()) {
-            result.append("Node: ").append(n.getKey()).append(" Ni count: ").append(this._g_edges.get(n.getKey()).getNiSize());
+            result.append("Node: ").append(n.getKey());
+            result.append(" | Ni Count: ").append(this._g_edges.get(n.getKey()).getNiSize()).append(" | NiKey->Weight: ");
+            for (node_info n1 : this.getV(n.getKey())) {
+                s_ni.add(n1.getKey());
+            }
+            for (Integer in : s_ni) {
+                result.append(this._g_nodes.get(in).getKey()).append("->");
+                result.append(this.getEdge(n.getKey(), in)).append(" | ");
+            }
             result.append("\n");
         }
         return result.toString();

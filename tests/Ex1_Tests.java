@@ -10,8 +10,8 @@ public class Ex1_Tests {
      * Creates a graph with the given node and edge size. The graph is created and connected
      * by randomizing the connected nodes and the connection weight for each and every connection
      *
-     * @param n_size
-     * @param e_size
+     * @param n_size - Node size
+     * @param e_size - Edge size
      * @return
      */
     public static weighted_graph graph_creator(int n_size, int e_size){
