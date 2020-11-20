@@ -1,22 +1,20 @@
-![alt text](src/ex1/WikiPictures/redgraph.gif)
-
 # Undirected & Unweighted Graph Java Implementation
   
 An implementation of an undirected unweighted graph in java.  
 This project implements three different interfaces introduced in our assignment:  
   
-- **node_data** (implemented by **NodeData**) - an object representing each individual node/vertex in the graph  
-- **graph** (implemented by **Graph_DS**) - an object representing a graph tha points to all of its containing nodes  
-- **graph_algorithms** (implemented by **Graph_Algo**) - an object that implements some basic graph algorithms  
-  
-- Our main data structure of choice is a **HashMap** that is used to store every nodes neighbors in the **NodeData** object  
-and every graph's nodes in **Graph_DS** object.  
-  
-- The main reasons we chose HashMap is because the efficiency for our projects needed methods.  
-For example the efficient `put()`, `get()` and `contains()` are all O(1) and most importantly the values() method that  
-returns a **Collection** view of all the values contained in this map. The `values()` is perfect for the implementation  
-of our `getV()` method which returns the nodes or neighbors of a selected node in a graph.  
-The `getV()` method is used almost in every algorithm and iteration in this project.  
+- **node_data** (implemented by **NodeData**) - an object representing each individual node/vertex in the graph
+- **graph** (implemented by **Graph_DS**) - an object representing a graph tha points to all of its containing nodes
+- **graph_algorithms** (implemented by **Graph_Algo**) - an object that implements some basic graph algorithms
+
+- Our main data structure of choice is a **HashMap** that is used to store every nodes neighbors in the **NodeData** object
+and every graph's nodes in **Graph_DS** object.
+
+- The main reasons we chose HashMap is because the efficiency for our projects needed methods.
+For example the efficient `put()`, `get()` and `contains()` are all O(1) and most importantly the values() method that
+returns a **Collection** view of all the values contained in this map. The `values()` is perfect for the implementation
+of our `getV()` method which returns the nodes or neighbors of a selected node in a graph.
+The `getV()` method is used almost in every algorithm and iteration in this project.
   
 ## Main Classes and Methods  
 ### NodeData  
@@ -68,12 +66,5 @@ The `getV()` method is used almost in every algorithm and iteration in this proj
 - https://stackoverflow.com/questions/3267572/fastest-data-structure-for-contains-in-java
 - https://www.baeldung.com/java-hashset-arraylist-contains-performance
   
-### Dijkstra's Algorithm
-- https://www.coursera.org/lecture/advanced-data-structures/core-dijkstras-algorithm-2ctyF
-- https://en.wikipedia.org/wiki/Shortest_path_problem
-
-### PriorityQueue and Comparable Usage
-- https://www.youtube.com/watch?v=c4ES6jGxqEw
-
-### Serialization
-- https://www.youtube.com/watch?v=6B6vp0jZnb0
+### BFS algorithm:
+- https://www.youtube.com/watch?v=oDqjPvD54Ss&t=184s

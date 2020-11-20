@@ -4,7 +4,7 @@ import java.io.File;
 
 public class Structure {
 
-    private static String[] _dirs = {"src", "tests", "README.txt"};
+    private static String[] _dirs = {"src", "tests", "README.md"};
     private static String[] _files = {"node_info.java", "weighted_graph.java",
             "weighted_graph_algorithms.java", "WGraph_Algo.java", "WGraph_DS.java"};
     private static String _log = "";
@@ -29,7 +29,7 @@ public class Structure {
             if (!src.exists()) {
                 ans = false;
                 String str = "ERR: no folder named " + _dirs[i];
-                if(_dirs[i].equals("README.txt"))
+                if(_dirs[i].equals("README.md"))
                     str = "ERR: no file named " + _dirs[i];
                 System.err.println(str);
                 log(str);
