@@ -1,9 +1,11 @@
+package ex1.src;
+
 import java.io.*;
 import java.util.*;
 
 /**
- * This class implements the weighted_graph_algorithms interface that represents algorithms to run on a
- * weighted_graph object. This class implements a few main methods including a deep copy method,
+ * This class implements the ex1.src.weighted_graph_algorithms interface that represents algorithms to run on a
+ * ex1.src.weighted_graph object. This class implements a few main methods including a deep copy method,
  * isConnected to check graph connectivity (implemented via BFS algorithm), shortest path and
  * shortest length method between two nodes (implemented via Dijkstra's algorithm)
  * and file save and load method via serialization.
@@ -27,7 +29,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     /**
      * Returns a pointer to the underlying graph of which this class works on.
      *
-     * @return this WGraph_DS Object
+     * @return this ex1.src.WGraph_DS Object
      */
     @Override
     public weighted_graph getGraph() {
@@ -128,7 +130,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     }
 
     /**
-     * returns an ordered List<node_info> repressenting the shortest path between src to dest.
+     * returns an ordered List<ex1.src.node_info> repressenting the shortest path between src to dest.
      * In here we use the same mechanism and algorithm used in the shortestPathDist() method
      * But the main difference is we store each nodes parent (depends on the the scanning direction of the graph)
      * and after we finished the scan, if we reached the destination, we build the path List by getting each nodes
@@ -136,7 +138,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      *
      * @param src  - start node
      * @param dest - end (target) node
-     * @return ordered List<node_info> containing the shortest path from src->dest ,null otherwise
+     * @return ordered List<ex1.src.node_info> containing the shortest path from src->dest ,null otherwise
      */
     @Override
     public List<node_info> shortestPath(int src, int dest) {
