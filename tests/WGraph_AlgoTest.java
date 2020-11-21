@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * External apps used for testing:
  * https://app.diagrams.net/
  * https://graphonline.ru/en/
- * https://app.diagrams.net/
+ * https://app.diagrams.net
  */
 class WGraph_AlgoTest {
 

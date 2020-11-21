@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * Other Apps used for testing:
  * https://graphonline.ru/en/
- * https://app.diagrams.net/
+ * https://app.diagrams.net
  */
 public class WGraph_DSTest {
 

@@ -207,7 +207,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      * Loads a graph from a file to this graph_algo. Overrides the underlying graph.
      *
      * @param file - file name or path
-     * @return true - iff the graph was successfully loaded. Changes the underlying graph
+     * @return true - if the graph was successfully loaded. Changes the underlying graph
      */
     @Override
     public boolean load(String file) {
