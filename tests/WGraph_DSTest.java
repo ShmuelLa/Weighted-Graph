@@ -20,7 +20,7 @@ public class WGraph_DSTest {
      * (WikiPictures/testgraph.jpg)
      * @return WGraph_DS - an initialized graph with the above settings
      */
-    private weighted_graph mainTestGraph(){
+    public static weighted_graph mainTestGraph(){
         weighted_graph wg = new WGraph_DS();
         for (int i=1; i<=16; i++) {
             wg.addNode(i);

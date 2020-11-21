@@ -1,16 +1,16 @@
 ![alt text](WikiPictures/redgraph.gif)
 
-# Undirected & Unweighted Graph Java Implementation
+# Weighted Graph Java Implementation
   
-An implementation of an undirected unweighted graph in java.  
+An implementation of a Weighted graph in java.  
 This project implements three different interfaces introduced in our assignment:  
   
-- **graph** (implemented by **Graph_DS**) - an object representing a graph tha points to all of its containing nodes  
+- **weighted_graph** (implemented by **WGraph_DS**) - an object representing a graph tha points to all of its containing nodes  
     - **node_info** (implemented by **NodeInfo**) - an object representing each individual node/vertex in the graph  
-- **graph_algorithms** (implemented by **Graph_Algo**) - an object that implements some basic graph algorithms  
+- **weighted_graph_algorithms** (implemented by **WGraph_Algo**) - an object that implements some basic graph algorithms  
   
 - Our main data structure of choice is a **HashMap** that is used to store every nodes neighbors in the **NodeData** object  
-and every graph's nodes in **Graph_DS** object.  
+and every graph's nodes in **WGraph_DS** object.  
   
 - The main reasons we chose HashMap is because the efficiency for our projects needed methods.  
 For example the efficient `put()`, `get()` and `contains()` are all O(1) and most importantly the values() method that  

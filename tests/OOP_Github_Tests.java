@@ -60,20 +60,6 @@ class Alg_t {
         }
     }
 
-    @Test
-    void save_load() {
-        weighted_graph g0 = DS_t.graph_creator(10,30,1);
-        weighted_graph_algorithms ag0 = new WGraph_Algo();
-        ag0.init(g0);
-        String str = "g0.obj";
-        ag0.save(str);
-        weighted_graph g1 = DS_t.graph_creator(10,30,1);
-        ag0.load(str);
-        assertEquals(g0,g1);
-        g0.removeNode(0);
-        assertNotEquals(g0,g1);
-    }
-
     private weighted_graph small_graph() {
         weighted_graph g0 = DS_t.graph_creator(11,0,1);
         g0.connect(0,1,1);

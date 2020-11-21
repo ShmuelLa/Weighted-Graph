@@ -55,7 +55,13 @@ class WGraph_AlgoTest {
         return result;
     }
 
-    private weighted_graph_algorithms mainTestGraph(){
+    /**
+     * Creates this graph for testing:
+     * WikiPictures/testgraph.jpg
+     *
+     * @return weighted_graph_algorithms - The graph initialized for testing
+     */
+    private weighted_graph_algorithms mainTestGraphAlg(){
         weighted_graph wg = new WGraph_DS();
         for (int i=1; i<=16; i++) {
             wg.addNode(i);
@@ -84,10 +90,13 @@ class WGraph_AlgoTest {
         return wga;
     }
 
+    /**
+     * Simple init test
+     */
     @Test
     void init() {
-        weighted_graph_algorithms wga2 = mainTestGraph();
-        weighted_graph wg1 = mainTestGraph().copy();
+        weighted_graph_algorithms wga2 = mainTestGraphAlg();
+        weighted_graph wg1 = mainTestGraphAlg().copy();
         weighted_graph_algorithms wga1 = new WGraph_Algo();
         wga1.init(wg1);
         assertEquals(wga1.copy(),wga2.copy());
@@ -95,119 +104,75 @@ class WGraph_AlgoTest {
         assertNotEquals(wga1.copy(),wga2.copy());
     }
 
+    /**
+     * Tests saving and loading a graph.
+     * Also tests the copy method
+     */
     @Test
-    void getGraph() {
-    }
-
-    @Test
-    void copy() {
-        weighted_graph_algorithms wga2 = mainTestGraph();
-        weighted_graph wg1 = mainTestGraph().copy();
-        weighted_graph_algorithms wga1 = new WGraph_Algo();
-        wga1.init(wg1);
-        assertEquals(wga1.copy(),wga2.copy());
-        wg1.removeNode(2);
-        assertNotEquals(wga1.copy(),wga2.copy());
-        wg1.addNode(2);
-        wg1.connect(1,2,3);
-        assertEquals(wga1.copy(),wga2.copy());
-        wg1.connect(1,2,2);
-        assertNotEquals(wga1.copy(),wga2.copy());
-        wg1.addNode(44);
-        assertNotEquals(wga1.copy(),wga2.copy());
-
-
+    @DisplayName("Save/Load & Copy test")
+    void save_load_copy() {
+        weighted_graph_algorithms wga = mainTestGraphAlg();
+        weighted_graph wg = WGraph_DSTest.mainTestGraph();
+        weighted_graph_algorithms wga2 = new WGraph_Algo();
+        wga2.init(wg);
+        wga2.save("testname");
+        wga2.load("testname");
+        assertEquals(wga2.getGraph(),wg);
+        assertEquals(wga2.copy(),wg);
+        assertEquals(wga2.getGraph(),wga.getGraph());
+        assertEquals(wga2.copy(),wga.getGraph());
+        wga.load("testname");
+        assertEquals(wga.getGraph(),wga2.getGraph());
+        wg.removeNode(1);
+        wga2.save("testname2");
+        wga2.load("testname2");
+        assertNotEquals(wga.getGraph(),wg);
+        assertNotEquals(wga.copy(),wg);
         weighted_graph gr = graph_creator(5,10);
         weighted_graph_algorithms gra = new WGraph_Algo();
         gra.init(gr);
         weighted_graph gr2 = gra.copy();
         assertEquals(gr,gr2);
-    }
-
-    @Test
-    void save() {
-    }
-
-    @Test
-    void load() {
-    }
-
-    @Test
-    void reset() {
+        gr.connect(1,2,5000);
+        assertNotEquals(gr,gr2);
     }
 
     @Test
     @DisplayName("Connectivity check before and after changes")
     void isConnected() {
-        WGraph_DS graph = new WGraph_DS();
-        weighted_graph_algorithms algo = new WGraph_Algo();
-        algo.init(graph);
-        for (int i = 0; i <= 5; i++) {
-            graph.addNode(i);
-        }
-        graph.connect(0,2,2);
-        graph.connect(0,1,2);
-        graph.connect(1,3,2);
-        graph.connect(2,3,2);
-        graph.connect(3,4,2);
-        graph.connect(4,5,2);
-        graph.connect(0,5,2);
-        algo.init(graph);
-        assertTrue(algo.isConnected());
-        graph.removeNode(5);
-        assertTrue(algo.isConnected());
-        graph.removeNode(0);
-        assertTrue(algo.isConnected());
-        graph.removeNode(3);
-        assertFalse(algo.isConnected());
-
-
-        weighted_graph_algorithms wga = mainTestGraph();
+        weighted_graph wg = WGraph_DSTest.mainTestGraph();
+        weighted_graph_algorithms wga = new WGraph_Algo();
+        wga.init(wg);
         assertTrue(wga.isConnected());
-        weighted_graph wg = mainTestGraph().copy();
-        wg.removeNode(2);
-        weighted_graph_algorithms wga2 = new WGraph_Algo();
-        wga2.init(wg);
-        assertTrue(wga2.isConnected());
+        wg.removeNode(5);
+        assertTrue(wga.isConnected());
+        wg.removeNode(13);
+        assertTrue(wga.isConnected());
         wg.removeNode(14);
-        assertTrue(wga2.isConnected());
+        assertTrue(wga.isConnected());
         wg.removeNode(15);
-        assertTrue(wga2.isConnected());
-        wg.removeNode(3);
-        assertTrue(wga2.isConnected());
+        assertTrue(wga.isConnected());
         wg.removeNode(7);
-        assertFalse(wga2.isConnected());
-        wg.connect(6,8,1);
-        wga2.isConnected();
-        wg.connect(8,6,1);
+        assertFalse(wga.isConnected());
+        wg.connect(6,8,0);
+        wg.connect(6,9,0);
+        assertTrue(wga.isConnected());
+        weighted_graph wg2 = WGraph_DSTest.mainTestGraph();
+        weighted_graph_algorithms wga2 = new WGraph_Algo();
+        wga.init(wg2);
+        assertTrue(wga2.isConnected());
+        wg2.addNode(2);
         assertTrue(wga2.isConnected());
     }
 
     @Test
     void shortestPathDist() {
-        WGraph_DS g1 = new WGraph_DS();
-        for (int i=1; i<=12; i++) {
-            g1.addNode(i);
-        }
-        g1.connect(1,2,4);
-        g1.connect(1,3,3);
-        g1.connect(1,4,2);
-        g1.connect(6,2,1);
-        g1.connect(3,6,5);
-        g1.connect(3,5,7);
-        g1.connect(4,5,8);
-        g1.connect(6,8,2);
-        g1.connect(5,8,3);
-        g1.connect(8,11,8);
-        g1.connect(8,10,2);
-        g1.connect(6,9,2);
-        g1.connect(9,10,7);
-        g1.connect(10,12,14);
-        g1.connect(7,11,9);
-        g1.connect(11,12,1);
-        WGraph_Algo ga1 = new WGraph_Algo();
-        ga1.init(g1);
-        assertEquals(16,ga1.shortestPathDist(1,12));
+        weighted_graph wg = WGraph_DSTest.mainTestGraph();
+        weighted_graph_algorithms wga = new WGraph_Algo();
+        wga.init(wg);
+        System.out.println(wga.shortestPathDist(1,16));
+        System.out.println(wga.shortestPathDist(1,1));
+        System.out.println(wga.shortestPathDist(1,0));
     }
 
     @Test
