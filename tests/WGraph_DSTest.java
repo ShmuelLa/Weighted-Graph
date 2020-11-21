@@ -1,16 +1,17 @@
-package ex1.tests;
-
-import ex1.src.WGraph_DS;
-import ex1.src.node_info;
-import ex1.src.weighted_graph;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import static org.junit.jupiter.api.Assertions.*;
 
-class Graph_DSTest {
+/**
+ * Other Apps used for testing:
+ * https://graphonline.ru/en/
+ * https://app.diagrams.net/
+ */
+public class WGraph_DSTest {
+
 
     private weighted_graph mainTestGraph(){
         weighted_graph wg = new WGraph_DS();

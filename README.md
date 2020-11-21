@@ -1,4 +1,4 @@
-![alt text](src/ex1/WikiPictures/redgraph.gif)
+![alt text](WikiPictures/redgraph.gif)
 
 # Undirected & Unweighted Graph Java Implementation
   
@@ -55,6 +55,10 @@ The `getV()` method is used almost in every algorithm and iteration in this proj
 - `shortestPath()` - Returns a List<node_data> of the shortest path between two nodes
   > if non existent returns null
 
+## Tests
+### Main Graph Built Used for Testing
+[!alt text](WikiPictures/testgraph.jpg)
+
 ## External articles and links used for the planning this project  
   
 ### HashMap intel and efficiency:
@@ -77,3 +81,4 @@ The `getV()` method is used almost in every algorithm and iteration in this proj
 
 ### Serialization
 - https://www.youtube.com/watch?v=6B6vp0jZnb0
+- https://stackoverflow.com/questions/10378855/java-io-invalidclassexception-local-class-incompatible
