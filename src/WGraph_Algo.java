@@ -100,7 +100,8 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public double shortestPathDist(int src, int dest) {
-        if (this._g.nodeSize()<=1 || src==dest || this._g.getNode(src)==null || this._g.getNode(dest)==null) return -1;
+        if (this._g.nodeSize()<=1 || this._g.getNode(src)==null || this._g.getNode(dest)==null) return -1;
+        if (src == dest) return 0.0;
         PriorityQueue<node_info> pq = new PriorityQueue<>();
         double result;
         node_info cur = this._g.getNode(src);
@@ -143,7 +144,8 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public List<node_info> shortestPath(int src, int dest) {
-        if (this._g.nodeSize()<=1 || src==dest || this._g.getNode(src)==null || this._g.getNode(dest)==null) return null;
+        if (this._g.nodeSize()<=1 || this._g.getNode(src)==null || this._g.getNode(dest)==null) return null;
+        if (src == dest) return new ArrayList<>();
         PriorityQueue<node_info> pq = new PriorityQueue<>();
         HashMap<node_info,node_info> parent = new HashMap<>();
         List<node_info> result = new ArrayList<>();

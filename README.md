@@ -1,7 +1,7 @@
 ![alt text](WikiPictures/redgraph.gif)
 
-# Weighted Graph Java Implementation
-  
+# :memo: Weighted Graph Java Implementation
+
 An implementation of a Weighted graph in java.  
 This project implements three different interfaces introduced in our assignment:  
   
@@ -47,19 +47,19 @@ The `getV()` method is used almost in every algorithm and iteration in this proj
   > O(1) Complexity
 
 ### Graph_Algo
-- `init` - Initialize the graph
-- `copy()` - Creates a deep copy of the graph
-- `isConnected()` - Checks if the graph is connected
-- `shortestPathDist()` - Returns the length of te shortest path between two nodes
-  > if non existent returns -1
-- `shortestPath()` - Returns a List<node_data> of the shortest path between two nodes
-  > if non existent returns null
+| **Method**      |    **Detail** |
+|-----------------|--------------|
+|`init()`         | Initialize the graph |
+| `copy()`        | Creates a deep copy of the graph |
+| `isConnected()` | Checks if the graph is connected |
+| `shortestPathDist()`| Returns the length of te shortest path between two node, if non existent returns -1 |
+| `shortestPath()` | Returns a List<node_data> of the shortest path between two nodes, if non existent returns null |
 
 ## Tests
 ### Main Graph Built Used for Testing
 [!alt text](WikiPictures/testgraph.jpg)
 
-## External articles and links used for the planning this project  
+## :speech_balloon: External articles and links used for the planning this project  
   
 ### HashMap intel and efficiency:
 - https://javatutorial.net/java-iterate-hashmap-example

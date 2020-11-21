@@ -170,9 +170,12 @@ class WGraph_AlgoTest {
         weighted_graph wg = WGraph_DSTest.mainTestGraph();
         weighted_graph_algorithms wga = new WGraph_Algo();
         wga.init(wg);
-        System.out.println(wga.shortestPathDist(1,16));
-        System.out.println(wga.shortestPathDist(1,1));
-        System.out.println(wga.shortestPathDist(1,0));
+        assertEquals(0,wga.shortestPathDist(1,1));
+        assertEquals(7,wga.shortestPathDist(1,6));
+        assertEquals(-1,wga.shortestPathDist(1,0));
+        assertEquals(23,wga.shortestPathDist(1,16));
+        wg.removeNode(14);
+        assertEquals(23-9+4+33,wga.shortestPathDist(1,16));
     }
 
     @Test
