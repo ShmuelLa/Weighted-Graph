@@ -42,10 +42,11 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     @Override
     public weighted_graph copy() {
         weighted_graph result = new WGraph_DS();
-        if (this._g == null) return null;
+        if (this._g.nodeSize() == 0) return result;
         for (node_info n : this._g.getV()) {
             result.addNode(n.getKey());
         }
+        if (this._g.edgeSize() == 0) return result;
         for (node_info n : this._g.getV()) {
             for (node_info inner : this._g.getV(n.getKey())) {
                 result.connect(n.getKey(),inner.getKey(),this._g.getEdge(n.getKey(),inner.getKey()));
@@ -78,7 +79,9 @@ public class WGraph_Algo implements weighted_graph_algorithms {
                     visited.add(node);
                     queue.add(node);
                 }
+                if (visited.size() == this._g.nodeSize()) return true;
             }
+            if (visited.size() == this._g.nodeSize()) return true;
         }
         return visited.size() == this._g.nodeSize();
     }
@@ -97,7 +100,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public double shortestPathDist(int src, int dest) {
-        if (this._g == null || src == dest || this._g.getNode(src) == null || this._g.getNode(dest) == null) return -1;
+        if (this._g.nodeSize()<=1 || src==dest || this._g.getNode(src)==null || this._g.getNode(dest)==null) return -1;
         PriorityQueue<node_info> pq = new PriorityQueue<>();
         double result;
         node_info cur = this._g.getNode(src);
@@ -140,7 +143,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public List<node_info> shortestPath(int src, int dest) {
-        if (this._g == null || src == dest || this._g.getNode(src) == null || this._g.getNode(dest) == null) return null;
+        if (this._g.nodeSize()<=1 || src==dest || this._g.getNode(src)==null || this._g.getNode(dest)==null) return null;
         PriorityQueue<node_info> pq = new PriorityQueue<>();
         HashMap<node_info,node_info> parent = new HashMap<>();
         List<node_info> result = new ArrayList<>();
@@ -185,19 +188,19 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public boolean save(String file) {
+        boolean flag = false;
         try {
             FileOutputStream f = new FileOutputStream (file, true);
             ObjectOutputStream  graph = new ObjectOutputStream (f);
             graph.writeObject(this._g);
             graph.close();
-            return true;
+            flag = true;
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
-            return false;
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
+        return flag;
     }
 
     /**
@@ -208,19 +211,17 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public boolean load(String file) {
+        boolean flag = false;
         try {
             FileInputStream fi = new FileInputStream(file);
             ObjectInputStream gr = new ObjectInputStream(fi);
-            weighted_graph loaded_g = (weighted_graph) gr.readObject();
-            this._g = null;
-            this._g = loaded_g;
+            this._g = (weighted_graph) gr.readObject();
             gr.close();
-            return true;
+            flag = true;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            return false;
         }
-
+        return flag;
     }
 
     /**
@@ -234,5 +235,23 @@ public class WGraph_Algo implements weighted_graph_algorithms {
                 n.setInfo(null);
             }
         }
+    }
+
+    /**
+     * This method overrides the equals method from Object interface.
+     * It is used for graph comparing. Used vastly in testing and debugging.
+     * It uses the toString method which is override as well for this project.
+     *
+     * For more information and for the full doc:
+     * https://docs.oracle.com/javase/7/docs/api/java/lang/Object.html
+     *
+     * @param obj the reference object with which to compare.
+     * @return boolean - if this object is the same as the obj
+     */
+    @Override
+    public boolean equals(Object obj) {
+        weighted_graph g_obj = (WGraph_DS) obj;
+        if (_g.edgeSize() != g_obj.edgeSize() || _g.nodeSize() != g_obj.nodeSize()) return false;
+        return Objects.equals(_g.toString(), g_obj.toString());
     }
 }

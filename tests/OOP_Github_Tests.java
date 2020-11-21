@@ -167,59 +167,6 @@ class DS_t {
         }
     }
 
-    @Test
-    void connect() {
-        weighted_graph g = new WGraph_DS();
-        g.addNode(0);
-        g.addNode(1);
-        g.addNode(2);
-        g.addNode(3);
-        g.connect(0,1,1);
-        g.connect(0,2,2);
-        g.connect(0,3,3);
-        g.removeEdge(0,1);
-        assertFalse(g.hasEdge(1,0));
-        g.removeEdge(2,1);
-        g.connect(0,1,1);
-        double w = g.getEdge(1,0);
-        assertEquals(w,1);
-    }
-
-
-    @Test
-    void removeNode() {
-        weighted_graph g = new WGraph_DS();
-        g.addNode(0);
-        g.addNode(1);
-        g.addNode(2);
-        g.addNode(3);
-        g.connect(0,1,1);
-        g.connect(0,2,2);
-        g.connect(0,3,3);
-        g.removeNode(4);
-        g.removeNode(0);
-        assertFalse(g.hasEdge(1,0));
-        int e = g.edgeSize();
-        assertEquals(0,e);
-        assertEquals(3,g.nodeSize());
-    }
-
-    @Test
-    void removeEdge() {
-        weighted_graph g = new WGraph_DS();
-        g.addNode(0);
-        g.addNode(1);
-        g.addNode(2);
-        g.addNode(3);
-        g.connect(0,1,1);
-        g.connect(0,2,2);
-        g.connect(0,3,3);
-        g.removeEdge(0,3);
-        double w = g.getEdge(0,3);
-        assertEquals(w,-1);
-    }
-
-
     ///////////////////////////////////
     /**
      * Generate a random graph with v_size nodes and e_size edges

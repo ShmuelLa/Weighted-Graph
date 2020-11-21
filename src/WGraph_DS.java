@@ -1,3 +1,4 @@
+import java.beans.beancontext.BeanContextServicesSupport;
 import java.io.Serializable;
 import java.util.*;
 
@@ -121,9 +122,9 @@ public class WGraph_DS implements weighted_graph, Serializable {
         @Override
         public String toString() {
             StringBuilder result = new StringBuilder();
-            result.append("Node Key: "+this._key+"\n");
-            result.append("Node Tag: "+this._tag+"\n");
-            result.append("Node MetaData: "+this._str+"\n");
+            result.append("Node Key: ").append(this._key).append("\n");
+            result.append("Node Tag: ").append(this._tag).append("\n");
+            result.append("Node MetaData: ").append(this._str).append("\n");
             return result.toString();
         }
 
@@ -354,6 +355,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
      */
     @Override
     public Collection<node_info> getV() {
+        if (this._g_nodes.isEmpty()) return new ArrayList<>();
         return this._g_nodes.values();
     }
 
@@ -367,6 +369,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
      */
     @Override
     public Collection<node_info> getV(int node_id) {
+        if (!this._g_nodes.containsKey(node_id)) return new ArrayList<>();
         return this._g_edges.get(node_id).getNi();
     }
 
@@ -379,17 +382,19 @@ public class WGraph_DS implements weighted_graph, Serializable {
      */
     @Override
     public node_info removeNode(int key) {
-        if (!this._g_nodes.containsKey(key)) return null;
-        node_info tmp_n = this._g_nodes.get(key);
-        for (node_info n : this.getV(key)) {
-            this.removeEdge(n.getKey(),key);
+        if (this._g_nodes.containsKey(key)) {
+            node_info tmp_n = this._g_nodes.get(key);
+            for (node_info n : this.getV(key)) {
+                this.removeEdge(n.getKey(),key);
+            }
+            this._g_nodes.remove(key);
+            _mc = _mc+this._g_edges.get(key).getNiSize()+1;
+            _e_size = _e_size-this._g_edges.get(key).getNiSize();
+            this._g_edges.get(key).removeSrc();
+            this._g_edges.remove(key);
+            return tmp_n;
         }
-        this._g_nodes.remove(key);
-        _mc = _mc+this._g_edges.get(key).getNiSize();
-        _e_size = _e_size-this._g_edges.get(key).getNiSize();
-        this._g_edges.get(key).removeSrc();
-        this._g_edges.remove(key);
-        return tmp_n;
+        else return null;
     }
 
     /**
@@ -401,10 +406,12 @@ public class WGraph_DS implements weighted_graph, Serializable {
      */
     @Override
     public void removeEdge(int node1, int node2) {
-        this._g_edges.get(node1).removeEd(node2);
-        this._g_edges.get(node2).removeEd(node1);
-        _mc++;
-        _e_size--;
+        if (this._g_nodes.containsKey(node1) && this._g_nodes.containsKey(node2) && node1 != node2) {
+            this._g_edges.get(node1).removeEd(node2);
+            this._g_edges.get(node2).removeEd(node1);
+            _mc++;
+            _e_size--;
+        }
     }
 
     /**

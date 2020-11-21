@@ -5,8 +5,8 @@
 An implementation of an undirected unweighted graph in java.  
 This project implements three different interfaces introduced in our assignment:  
   
-- **node_data** (implemented by **NodeData**) - an object representing each individual node/vertex in the graph  
 - **graph** (implemented by **Graph_DS**) - an object representing a graph tha points to all of its containing nodes  
+    - **node_info** (implemented by **NodeInfo**) - an object representing each individual node/vertex in the graph  
 - **graph_algorithms** (implemented by **Graph_Algo**) - an object that implements some basic graph algorithms  
   
 - Our main data structure of choice is a **HashMap** that is used to store every nodes neighbors in the **NodeData** object  
