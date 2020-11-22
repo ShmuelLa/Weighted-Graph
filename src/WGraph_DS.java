@@ -1,4 +1,3 @@
-import java.beans.beancontext.BeanContextServicesSupport;
 import java.io.Serializable;
 import java.util.*;
 
@@ -8,7 +7,7 @@ import java.util.*;
  * 1 - NodeInfo which implements node_info interface which includes the information and methods each node stores
  * 2 - EdgeInfo which stores all the data and methods for all the edges in the graph
  * Each graph consists of two HashMap data structures. One for the node and the other for the edges.
- * Each graph also has an integers that count the edges and the mode count (internal changes count) of the graph
+ * Each graph also has an integer that count the edges and the mode count (internal changes count) of the graph
  *
  * @author shmuel.lavian
  */
@@ -27,7 +26,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
      */
     private class NodeInfo implements node_info, Comparable<node_info>, Serializable {
         private static final long serialVersionUID = 515225244672992607L;
-        private int _key;
+        private final int _key;
         private double _tag;
         private String _str;
 
@@ -121,11 +120,9 @@ public class WGraph_DS implements weighted_graph, Serializable {
          */
         @Override
         public String toString() {
-            StringBuilder result = new StringBuilder();
-            result.append("Node Key: ").append(this._key).append("\n");
-            result.append("Node Tag: ").append(this._tag).append("\n");
-            result.append("Node MetaData: ").append(this._str).append("\n");
-            return result.toString();
+            return "Node Key: " + this._key + "\n" +
+                    "Node Tag: " + this._tag + "\n" +
+                    "Node MetaData: " + this._str + "\n";
         }
 
         /**
@@ -351,7 +348,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
      * Return a pointer to a collection representing all the nodes in the graph.
      * This method runs in a constant O(1) time by using the values() method implemented in HashMap.
      *
-     * @return Collection<node_info> - shallow copy to the nodes Map
+     * @return Collection of node_info objects - shallow copy to the nodes Map
      */
     @Override
     public Collection<node_info> getV() {
@@ -362,10 +359,10 @@ public class WGraph_DS implements weighted_graph, Serializable {
     /**
      * This method returns a Collection containing all the nodes connected to the given node ID
      * by using the inner classes getNI method.
-     * Run in O(k) time, k - being the degree of node_id.
+     * Runs in O(1) complexity. Originally was meant to be o(k) while k = the degree of node_id.
      *
      * @param node_id - The received node to iterate on
-     * @return Collection<node_info> containing this nodes connected neighbors
+     * @return Collection of node_info objects containing this nodes connected neighbors
      */
     @Override
     public Collection<node_info> getV(int node_id) {

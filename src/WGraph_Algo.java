@@ -92,7 +92,6 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      * This way we can tag each node we reach with the shortest length from the last visited node to it.
      * This works by enqueuing the node with the smallest tag (path length) from the queue and checking it's neighbors
      * After we finish the graph scan and only if we reached the destination we return the destination nodes tag.
-     * Note: if no such path --> returns -1
      *
      * @param src  - start node
      * @param dest - end (target) node
@@ -132,7 +131,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     }
 
     /**
-     * returns an ordered List<node_info> repressenting the shortest path between src to dest.
+     * returns an ordered List of node_info objects representing the shortest path between src to dest.
      * In here we use the same mechanism and algorithm used in the shortestPathDist() method
      * But the main difference is we store each nodes parent (depends on the the scanning direction of the graph)
      * and after we finished the scan, if we reached the destination, we build the path List by getting each nodes
@@ -140,7 +139,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      *
      * @param src  - start node
      * @param dest - end (target) node
-     * @return ordered List<node_info> containing the shortest path from src->dest ,null otherwise
+     * @return ordered List of node_info objects containing the shortest path from src to dest ,null otherwise
      */
     @Override
     public List<node_info> shortestPath(int src, int dest) {
