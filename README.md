@@ -12,13 +12,13 @@ This project implements three different interfaces introduced in our assignment:
 - Our main data structure of choice is a **HashMap** that is used to store every node in the graph and also used to 
 implement weighted graph main mechanism, the weighted edges via the **EdgeInfo** object. 
   
-  <div class="mermaid">
-  graph TD
-    A(1) -->|3.5| F(2)
-    B(3) -->|22| C(4)
-    B(3) -->|1| d(5)
-    B(3) -->|3| e(6)
-  </div>
+<div class="mermaid">
+    graph TD
+        A(1) -->|3.5| F(2)
+        B(3) -->|22| C(4)
+        B(3) -->|1| d(5)
+        B(3) -->|3| e(6)
+</div>
   
 - The main reasons we chose HashMap is because of the high efficiency for our project.  
 For example the efficient `put()`, `get()` and `contains()` are all O(1) and most importantly the `values()` and `keyset()` methods that  
