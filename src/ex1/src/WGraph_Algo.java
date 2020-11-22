@@ -196,6 +196,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
             FileOutputStream f = new FileOutputStream (file, true);
             ObjectOutputStream  graph = new ObjectOutputStream (f);
             graph.writeObject(this._g);
+            f.close();
             graph.close();
             flag = true;
         } catch (FileNotFoundException e) {
@@ -219,6 +220,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
             FileInputStream fi = new FileInputStream(file);
             ObjectInputStream gr = new ObjectInputStream(fi);
             this._g = (weighted_graph) gr.readObject();
+            fi.close();
             gr.close();
             flag = true;
         } catch (IOException | ClassNotFoundException e) {
