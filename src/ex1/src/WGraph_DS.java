@@ -1,10 +1,12 @@
+package ex1.src;
+
 import java.io.Serializable;
 import java.util.*;
 
 /**
- * This class implements the weighted_graph interface that represents a mathematical weighted graph
+ * This class implements the ex1.src.weighted_graph interface that represents a mathematical weighted graph
  * it implements two classes internally:
- * 1 - NodeInfo which implements node_info interface which includes the information and methods each node stores
+ * 1 - NodeInfo which implements ex1.src.node_info interface which includes the information and methods each node stores
  * 2 - EdgeInfo which stores all the data and methods for all the edges in the graph
  * Each graph consists of two HashMap data structures. One for the node and the other for the edges.
  * Each graph also has an integer that count the edges and the mode count (internal changes count) of the graph
@@ -19,7 +21,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
     private int _mc;
 
     /**
-     * This internal class implements the node_info interface that represents a single vertex (node) in a graph,
+     * This internal class implements the ex1.src.node_info interface that represents a single vertex (node) in a graph,
      * Each vertex implemented with a unique integer key for access, a double tag for algorithmic usage
      * and a String for metadata. For each of those fields this class has a method to get or set them accordingly.
      * This class is implemented internally to avoid wrong usage of the graph.
@@ -31,7 +33,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
         private String _str;
 
         /**
-         * The main node_info constructor. Creates a new node with the received ID
+         * The main ex1.src.node_info constructor. Creates a new node with the received ID
          *
          * @param k - The ID to be set for the new node
          */
@@ -140,7 +142,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
      * This internal class implements the edges in the graph. It was added on top of the
      * given interfaces for improved performance and usability. Each node on the graph has and EdgeInfo
      * that contains all of it's edges and their weights accordingly. This class also implements more
-     * outside of the node_info interface for greater flexibility in the project.
+     * outside of the ex1.src.node_info interface for greater flexibility in the project.
      */
     private class EdgeInfo implements Serializable {
         private static final long serialVersionUID = -1996414580609036360L;
@@ -192,7 +194,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
          * Returns a Collections representing all the neighbors of a specific node
          * This method uses the HashMap keyset() method with O(1) complexity
          *
-         * @return - Collection<node_info> of the nodes neighbors
+         * @return - Collection<ex1.src.node_info> of the nodes neighbors
          */
         private Collection<node_info> getNi() {
             return new ArrayList<>(this._n_edges.keySet());
@@ -249,10 +251,10 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * Returns a pointer to the specific the node_info by the node ID
+     * Returns a pointer to the specific the ex1.src.node_info by the node ID
      *
      * @param key - the node_id
-     * @return node_info - The specified node info object
+     * @return ex1.src.node_info - The specified node info object
      */
     @Override
     public node_info getNode(int key) {
@@ -348,7 +350,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
      * Return a pointer to a collection representing all the nodes in the graph.
      * This method runs in a constant O(1) time by using the values() method implemented in HashMap.
      *
-     * @return Collection of node_info objects - shallow copy to the nodes Map
+     * @return Collection of ex1.src.node_info objects - shallow copy to the nodes Map
      */
     @Override
     public Collection<node_info> getV() {
@@ -362,7 +364,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
      * Runs in O(1) complexity. Originally was meant to be o(k) while k = the degree of node_id.
      *
      * @param node_id - The received node to iterate on
-     * @return Collection of node_info objects containing this nodes connected neighbors
+     * @return Collection of ex1.src.node_info objects containing this nodes connected neighbors
      */
     @Override
     public Collection<node_info> getV(int node_id) {
@@ -375,7 +377,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
      * and removes all edges which starts or ends at this node.
      *
      * @param key - Node ID to be deleted
-     * @return node_info - of the deleted node, null if none exists
+     * @return ex1.src.node_info - of the deleted node, null if none exists
      */
     @Override
     public node_info removeNode(int key) {

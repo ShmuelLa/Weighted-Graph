@@ -1,13 +1,13 @@
-![alt text](WikiPictures/redgraph2.gif)
+![alt text](../../WikiPictures/redgraph2.gif)
 
 # :mortar_board: Weighted Graph Java Implementation
 
 An implementation of a Weighted graph in java.  
 This project implements three different interfaces introduced in our assignment:  
   
-- **weighted_graph** (implemented by **WGraph_DS**) - an object representing a graph tha points to all of its containing nodes  
-    - **node_info** (implemented by **NodeInfo**) - an object representing each individual node/vertex in the graph, in this assignment it will be implemented internally  
-- **weighted_graph_algorithms** (implemented by **WGraph_Algo**) - an object that implements some basic graph algorithms  
+- **ex1.src.weighted_graph** (implemented by **ex1.src.WGraph_DS**) - an object representing a graph tha points to all of its containing nodes  
+    - **ex1.src.node_info** (implemented by **NodeInfo**) - an object representing each individual node/vertex in the graph, in this assignment it will be implemented internally  
+- **ex1.src.weighted_graph_algorithms** (implemented by **ex1.src.WGraph_Algo**) - an object that implements some basic graph algorithms  
   
 - Our main data structure of choice is a **HashMap** that is used to store every node in the graph and also used to 
 implement weighted graph main mechanism, the weighted edges via the **EdgeInfo** object. 
@@ -19,7 +19,7 @@ of our `getV()` methods which are used in almost every algorithm and iteration i
   
 ## :computer: Main Classes and Methods  
   
-### :chart_with_upwards_trend: WGraph_DS
+### :chart_with_upwards_trend: ex1.src.WGraph_DS
 This class implements a mathematical weighted graph by implements two classes internally
  :one: **NodeInfo** which implements the basic information and methods each node stores
  :two: **EdgeInfo** which stores all the data and methods for all the edges in the graph. This internal class 
@@ -29,7 +29,7 @@ This class implements a mathematical weighted graph by implements two classes in
 
 | **Methods**      |    **Details**        | **Complexity** |
 |-----------------|-----------------------|----------------|
-| `WGraph_DS()` | Default constructor     |
+| `ex1.src.WGraph_DS()` | Default constructor     |
 | `getNode()` | Returns a node by the nodeKey |
 | `hasEdge()` | Checks is two nodes are connected | O(1) |
 | `getEdge()` | Returns the weight of an edge between two nodes | O(1) |
@@ -37,7 +37,7 @@ This class implements a mathematical weighted graph by implements two classes in
 | `connect()` | Connects two nodes in the graph | O(1) |
 | `getV()` | Returns a collection view of the graph | O(1) |
 | `getV(int node_id)` | Returns a collection view of the graph | O(1), Originally O(k). k=node degree |
-| `removeNode` | Removed a node from the graph | O(n) |
+| `removeNode()` | Removed a node from the graph | O(n) |
 | `removeEdge()` | Remove an edge between two nodes in the graph | O(1) |
 | `nodeSize()` | Returns the number of the nodes in the graph | O(1) |
 | `edgeSize()` | Returns the number of the edges in the graph | O(1) |
@@ -103,7 +103,7 @@ of that in order to test complex algorithms like BFS and Dijkstra's.
 Implemented in `mainTestGraph()` and `mainTestGraphAlg()` accordingly
 
 ### Main Graph Built for Testing
-![alt text](WikiPictures/testgraph.jpg)
+![alt text](../../WikiPictures/testgraph.jpg)
 
 ## :memo: External articles and links used in the making of this project  
   

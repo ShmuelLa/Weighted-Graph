@@ -1,3 +1,8 @@
+package ex1.tests;
+
+import ex1.src.WGraph_DS;
+import ex1.src.node_info;
+import ex1.src.weighted_graph;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -6,7 +11,7 @@ import java.util.Collection;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * The main WGraph_DS testing class,
+ * The main ex1.src.WGraph_DS testing class,
  * will test all the main logical methods of the class
  *
  * Other Apps used for testing:
@@ -18,7 +23,7 @@ public class WGraph_DSTest {
     /**
      * Creates this graph for testing:
      * (WikiPictures/testgraph.jpg)
-     * @return WGraph_DS - an initialized graph with the above settings
+     * @return ex1.src.WGraph_DS - an initialized graph with the above settings
      */
     public static weighted_graph mainTestGraph(){
         weighted_graph wg = new WGraph_DS();

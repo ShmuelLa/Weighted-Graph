@@ -1,3 +1,6 @@
+package ex1.tests;
+
+import ex1.src.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -6,7 +9,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * The main test class for WGraph_Algo
+ * The main test class for ex1.src.WGraph_Algo
  *
  * External apps used for testing:
  * https://app.diagrams.net/
@@ -21,7 +24,7 @@ class WGraph_AlgoTest {
      *
      * @param n_size - Node size
      * @param e_size - Edge size
-     * @return WGraph_DS - Graph with the given nodes and edges
+     * @return ex1.src.WGraph_DS - Graph with the given nodes and edges
      */
     public static weighted_graph graph_creator(int n_size, int e_size){
         weighted_graph result = new WGraph_DS();
@@ -60,7 +63,7 @@ class WGraph_AlgoTest {
      * Creates this graph for testing:
      * WikiPictures/testgraph.jpg
      *
-     * @return weighted_graph_algorithms - The graph initialized for testing
+     * @return ex1.src.weighted_graph_algorithms - The graph initialized for testing
      */
     private weighted_graph_algorithms mainTestGraphAlg(){
         weighted_graph wg = new WGraph_DS();
