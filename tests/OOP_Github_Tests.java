@@ -7,34 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class Alg_t {
 
     @Test
-    void isConnected() {
-        weighted_graph g0 = DS_t.graph_creator(0,0,1);
-        weighted_graph_algorithms ag0 = new WGraph_Algo();
-        ag0.init(g0);
-        assertTrue(ag0.isConnected());
-
-        g0 = DS_t.graph_creator(1,0,1);
-        ag0 = new WGraph_Algo();
-        ag0.init(g0);
-        assertTrue(ag0.isConnected());
-
-        g0 = DS_t.graph_creator(2,0,1);
-        ag0 = new WGraph_Algo();
-        ag0.init(g0);
-        assertFalse(ag0.isConnected());
-
-        g0 = DS_t.graph_creator(2,1,1);
-        ag0 = new WGraph_Algo();
-        ag0.init(g0);
-        assertTrue(ag0.isConnected());
-
-        g0 = DS_t.graph_creator(10,30,1);
-        ag0.init(g0);
-        boolean b = ag0.isConnected();
-        assertTrue(b);
-    }
-
-    @Test
     void shortestPathDist() {
         weighted_graph g0 = small_graph();
         weighted_graph_algorithms ag0 = new WGraph_Algo();

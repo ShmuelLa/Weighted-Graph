@@ -137,6 +137,9 @@ class WGraph_AlgoTest {
         assertNotEquals(gr,gr2);
     }
 
+    /**
+     * Cheks the connectivity of a graph while changing
+     */
     @Test
     @DisplayName("Connectivity check before and after changes")
     void isConnected() {
@@ -165,7 +168,11 @@ class WGraph_AlgoTest {
         assertTrue(wga2.isConnected());
     }
 
+    /**
+     * Cheבks the shortest path distance in a set complex graph while changing it
+     */
     @Test
+    @DisplayName("Shortest path distance test")
     void shortestPathDist() {
         weighted_graph wg = WGraph_DSTest.mainTestGraph();
         weighted_graph_algorithms wga = new WGraph_Algo();
@@ -179,24 +186,14 @@ class WGraph_AlgoTest {
     }
 
     @Test
-    @DisplayName("Check Node Size")
-    void nodeSize_test() {
-        WGraph_DS g1 = new WGraph_DS();
-        for (int i=0; i<100; i++) {
-            g1.addNode(i);
-        }
-        assertEquals(100,g1.nodeSize());
-        g1.removeNode(99);
-        assertEquals(100-1,g1.nodeSize());
-        for (int i=0; i<25; i++) {
-            g1.removeNode(i);
-        }
-        assertEquals(100-1-25,g1.nodeSize());
-    }
-
-    @Test
     @DisplayName("Shortest Path List<> Test")
     void shortestPath() {
+        weighted_graph wg = WGraph_DSTest.mainTestGraph();
+        weighted_graph_algorithms wga = new WGraph_Algo();
+        wga.init(wg);
+        assertEquals(0,wga.shortestPath(1,1).size());
+        assertEquals(1,wga.shortestPath(1,6).get(0).getKey());
+        assertEquals(6,wga.shortestPath(1,6).get(1).getKey());
     }
 
     /**
