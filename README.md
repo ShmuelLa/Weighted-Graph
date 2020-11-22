@@ -12,22 +12,30 @@ This project implements three different interfaces introduced in our assignment:
 - Our main data structure of choice is a **HashMap** that is used to store every node in the graph and also used to 
 implement weighted graph main mechanism, the weighted edges via the **EdgeInfo** object. 
   
+  <div class="mermaid">
+  graph TD
+    A(1) -->|3.5| F(2)
+    B(3) -->|22| C(4)
+    B(3) -->|1| d(5)
+    B(3) -->|3| e(6)
+  </div>
+  
 - The main reasons we chose HashMap is because of the high efficiency for our project.  
 For example the efficient `put()`, `get()` and `contains()` are all O(1) and most importantly the `values()` and `keyset()` methods that  
 returns a **Collection** view of all the values/keys contained in this map accordingly. The `values()` and `keyset()` are perfect for the implementation  
 of our `getV()` methods which are used in almost every algorithm and iteration in this project.  
   
-## Main Classes and Methods  
+## :computer: Main Classes and Methods  
   
-### WGraph_DS
+### :chart_with_upwards_trend: WGraph_DS
 This class implements a mathematical weighted graph by implements two classes internally:
- - **NodeInfo** which implements the basic information and methods each node stores
- - **EdgeInfo** which stores all the data and methods for all the edges in the graph. This internal class 
+:one: **NodeInfo** which implements the basic information and methods each node stores
+:two: **EdgeInfo** which stores all the data and methods for all the edges in the graph. This internal class 
  is implemented on top of the received interface's for higher efficiency and complexity of the project.
  Each graph consists of two HashMap data structures. One for the node and the other for the edges.
  Each graph also has an integer that count the edges and the mode count (internal changes count) of the graph
 
-| **Method**      |    **Details**        | **Complexity** |
+| **Methods**      |    **Details**        | **Complexity** |
 |-----------------|-----------------------|----------------|
 | `WGraph_DS()` | Default constructor     |
 | `getNode()` | Returns a node by the nodeKey |
@@ -45,12 +53,12 @@ This class implements a mathematical weighted graph by implements two classes in
 | `equals()` | Compares two graphs and cheks if they are equal |
 | `toString()` | Creates a String representing the graph, adds each and every connection |
 
- > NodeInfo and EdgeInfo classes are internal and cannot be accessed directly, 
+ > :lock: NodeInfo and EdgeInfo classes are internal and cannot be accessed directly, 
 >used only for developing
->
+
 ##### NodeInfo
 
-| **Method**      |    **Details**        |
+| **Methods**      |    **Details**        |
 |-----------------|-----------------------|
 | `NodeInfo()` | Constructs a new node with the given key |
 | `getKey()` | Returns the nodes key |
@@ -64,7 +72,8 @@ This class implements a mathematical weighted graph by implements two classes in
 
 ##### EdgeInfo
 
-| **Method**      |    **Details**        |
+| **Methods**    |    **Details**             |
+|----------------|----------------------------|
 | `EdgeInfo()` | The EdgeInfo constructor |
 | `setWeight()` | Sets the weight between two nodes in a single direction |
 | `connectE()` | Connects an edge between two nodes in a single direction |
@@ -75,7 +84,7 @@ This class implements a mathematical weighted graph by implements two classes in
 | `getNiSize()` | Returns the neighbor count of a specific node |
 | `removeEd()` | Removes and edge between two nodes in a single direction |
  
-### Graph_Algo
+### :bar_chart: Graph_Algo
 
 | **Method**      |    **Details** |
 |-----------------|--------------|
@@ -89,9 +98,10 @@ This class implements a mathematical weighted graph by implements two classes in
 | `load()` | Loads a graph from a file via Deserialization |
 | `reset()` | Rests the graph's tag and metadata after running an algorithm |
 
-## Tests
+## :mag: Tests
+
 ### Main Graph Built Used for Testing
-[!alt text](WikiPictures/testgraph.jpg)
+![alt text](WikiPictures/testgraph.jpg)
 
 ## :memo: External articles and links used for the planning this project  
   
