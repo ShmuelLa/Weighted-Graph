@@ -20,9 +20,9 @@ of our `getV()` methods which are used in almost every algorithm and iteration i
 ## :computer: Main Classes and Methods  
   
 ### :chart_with_upwards_trend: WGraph_DS
-This class implements a mathematical weighted graph by implements two classes internally:
-:one: **NodeInfo** which implements the basic information and methods each node stores
-:two: **EdgeInfo** which stores all the data and methods for all the edges in the graph. This internal class 
+This class implements a mathematical weighted graph by implements two classes internally
+ :one: **NodeInfo** which implements the basic information and methods each node stores
+ :two: **EdgeInfo** which stores all the data and methods for all the edges in the graph. This internal class 
  is implemented on top of the received interface's for higher efficiency and complexity of the project.
  Each graph consists of two HashMap data structures. One for the node and the other for the edges.
  Each graph also has an integer that count the edges and the mode count (internal changes count) of the graph
@@ -36,7 +36,7 @@ This class implements a mathematical weighted graph by implements two classes in
 | `addNode()` | Adds a new node to the graph | O(1) |
 | `connect()` | Connects two nodes in the graph | O(1) |
 | `getV()` | Returns a collection view of the graph | O(1) |
-| `getV(int node_id)` | Returns a collection view of the graph | O(1) |
+| `getV(int node_id)` | Returns a collection view of the graph | O(1), Originally O(k). k=node degree |
 | `removeNode` | Removed a node from the graph | O(n) |
 | `removeEdge()` | Remove an edge between two nodes in the graph | O(1) |
 | `nodeSize()` | Returns the number of the nodes in the graph | O(1) |
@@ -105,7 +105,7 @@ Implemented in `mainTestGraph()` and `mainTestGraphAlg()` accordingly
 ### Main Graph Built for Testing
 ![alt text](WikiPictures/testgraph.jpg)
 
-## :memo: External articles and links used for the planning this project  
+## :memo: External articles and links used in the making of this project  
   
 ### HashMap intel and efficiency:
 - https://javatutorial.net/java-iterate-hashmap-example
