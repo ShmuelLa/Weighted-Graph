@@ -1,4 +1,4 @@
-![alt text](WikiPictures/redgraph.gif){:height="50%" width="100%"}
+![alt text](WikiPictures/redgraph.gif)
 
 # :mortar_board: Weighted Graph Java Implementation
 
@@ -92,7 +92,17 @@ This class implements a mathematical weighted graph by implements two classes in
 
 ## :mag: Tests
 
-### Main Graph Built Used for Testing
+In this project we invested extensively in testing our implementation. 
+We created a test for each and every complex and simple method in this project.
+
+The tests rely on two main mechanisms:
+- a `graph_creator()` method we build that creates a graph with the set amount 
+of nodes and edges while randomizing their connections
+- a complex and unique graph build in advanced that we researched it behavior and take advantage 
+of that in order to test complex algorithms like BFS and Dijkstra's. 
+Implemented in `mainTestGraph()` and `mainTestGraphAlg()` accordingly
+
+### Main Graph Built for Testing
 ![alt text](WikiPictures/testgraph.jpg)
 
 ## :memo: External articles and links used for the planning this project  

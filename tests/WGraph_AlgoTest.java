@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
@@ -135,6 +136,9 @@ class WGraph_AlgoTest {
         assertEquals(gr,gr2);
         gr.connect(1,2,5000);
         assertNotEquals(gr,gr2);
+        weighted_graph_algorithms gra2 = new WGraph_Algo();
+        gra2.init(gr2);
+        assertNotEquals(gra.copy(),gra2.copy());
     }
 
     /**
@@ -185,6 +189,9 @@ class WGraph_AlgoTest {
         assertEquals(23-9+4+33,wga.shortestPathDist(1,16));
     }
 
+    /**
+     * Tests the shotest path List method algorithm
+     */
     @Test
     @DisplayName("Shortest Path List<> Test")
     void shortestPath() {
@@ -194,6 +201,38 @@ class WGraph_AlgoTest {
         assertEquals(0,wga.shortestPath(1,1).size());
         assertEquals(1,wga.shortestPath(1,6).get(0).getKey());
         assertEquals(6,wga.shortestPath(1,6).get(1).getKey());
+        ArrayList<Integer> test = new ArrayList<>();
+        test.add(1);
+        test.add(4);
+        test.add(10);
+        test.add(11);
+        test.add(12);
+        test.add(13);
+        test.add(14);
+        test.add(16);
+        int index = 0;
+        for (node_info n : wga.shortestPath(1,16)) {
+            assertEquals(n.getKey(),test.get(index));
+            index++;
+        }
+        index = 0;
+        wg.removeNode(14);
+        test.remove(7);
+        test.clear();
+        test.add(1);
+        test.add(4);
+        test.add(10);
+        test.add(11);
+        test.add(12);
+        test.add(7);
+        test.add(9);
+        test.add(16);
+        for (node_info n : wga.shortestPath(1,16)) {
+            assertEquals(n.getKey(),test.get(index));
+            index++;
+        }
+        assertNull(wga.shortestPath(1,55));
+        assertNull(wga.shortestPath(-22,0));
     }
 
     /**
