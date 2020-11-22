@@ -1,4 +1,4 @@
-![alt text](WikiPictures/redgraph.gif)
+![alt text](WikiPictures/redgraph2.gif)
 
 # :mortar_board: Weighted Graph Java Implementation
 
